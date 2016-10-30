@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+
+<extension type = "module" version = "3.1.0" client = "site" method="upgrade">
+
+   <name>Payroll Calculator</name>
+   <creationDate>2016-10-21</creationDate>
+   <author>Rosdyana Kusuma</author>
+   <authorUrl>http://r3m1ck.us/</authorUrl>
+   <copyright>Copyright 2016 Rosdyana Kusuma - All rights reserved.</copyright>
+   <version>1.0.0</version>
+   <description>Payroll Calculator module.</description>
+	
+   <files>
+      <filename>mod_payrollcalc.xml</filename>
+      <filename module = "mod_payrollcalc">mod_payrollcalc.php</filename>
+      <filename>index.html</filename>
+      <filename>tmpl/default.php</filename>
+      <filename>tmpl/index.html</filename>
+   </files>
+	
+   <config>
+   </config>
+	
+</extension>
