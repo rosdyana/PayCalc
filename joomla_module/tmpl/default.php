@@ -11,7 +11,7 @@ defined('_JEXEC') or die('Direct Access to this location is not allowed.');
  * Homepage: http://r3m1ck.us/
 */
 ?>
-    <script type="text/javascript">
+     <script type="text/javascript">
         function resetForm() {
             document.getElementById("myForm").reset();
         }
@@ -40,22 +40,30 @@ defined('_JEXEC') or die('Direct Access to this location is not allowed.');
         //disable it when go live ;)
         logger.enableLogger();
         
-        //function for gross nett approach button
+        //function for gross nett approach button as button1 in vb script
         function GrossNettApproach_func(){
-            ControlDisableGroup('SecondGroup',true);
-            ControlDisableGroup('ThirdGroup',false);
-            controlCheckbox('gross_basic_salary_checkbox', true);
-            controlCheckbox('gross_insurance_checkbox', true);
-            controlCheckbox('gros_jkjkk_checkbox', true);
-            //should be in group - TFU
-            var disabledId = ["BS_nettComp_field","BS_tax_field","insurance_NettComp_field","insurance_Tax_field",
-                                "jkjkk_NettComp_field","jkjkk_Tax_field","income1_NetComp_field","income1_Tax_field",
-                                "income2_NetComp_field","income2_Tax_field","income3_NetComp_field","income3_Tax_field",
-                                "income4_NetComp_field","income4_Tax_field","income5_NetComp_field","income5_Tax_field",
-                                "income6_NetComp_field","income6_Tax_field","income7_NetComp_field","income7_Tax_field"];
-            
-            for (var i = 0; i < disabledId.length; i++) {
-                controlDisableId(disabledId[i], true);   
+            var _comboboxMonth = document.getElementById('starting_month_combobox');
+            if ( _comboboxMonth.value ==""){
+                alert('Bulan Mulai belum dimasukan');
+            }
+            else{
+                ControlDisableGroup('SecondGroup',true);
+                ControlDisableGroup('ThirdGroup',false);
+                controlCheckbox('gross_basic_salary_checkbox', true);
+                controlCheckbox('gross_insurance_checkbox', true);
+                controlCheckbox('gros_jkjkk_checkbox', true);
+                //should be in group - TFU
+                var disabledId = ["BS_nettComp_field","BS_tax_field","insurance_NettComp_field","insurance_Tax_field",
+                                    "jkjkk_NettComp_field","jkjkk_Tax_field","income1_NetComp_field","income1_Tax_field",
+                                    "income2_NetComp_field","income2_Tax_field","income3_NetComp_field","income3_Tax_field",
+                                    "income4_NetComp_field","income4_Tax_field","income5_NetComp_field","income5_Tax_field",
+                                    "income6_NetComp_field","income6_Tax_field","income7_NetComp_field","income7_Tax_field"];
+                
+                for (var i = 0; i < disabledId.length; i++) {
+                    controlDisableId(disabledId[i], true);   
+                }
+                var BS_field = document.getElementById('basic_salary_field');
+                BS_field.focus();
             }
         }
 
@@ -72,7 +80,6 @@ defined('_JEXEC') or die('Direct Access to this location is not allowed.');
             for (var i = 0; i < disabledId.length; i++){
                 controlDisableId(disabledId[i], true);
             }
-
         }
 
         //disable-enable group from input data
@@ -193,21 +200,23 @@ defined('_JEXEC') or die('Direct Access to this location is not allowed.');
 
         function TextBox1BasicSalaryFocus(){
             var _BasicSalaryValue = getTextboxValue('basic_salary_field');
+            var _Insurancefield = document.getElementById('insurance_field');
             PayCal.BasicSalaryValue = parseInt(_BasicSalaryValue);
             console.log("BasicSalary : ",PayCal.BasicSalaryValue);
-            CariNett();
-            CariBasicSetahun();
-            cariSisaBulan();
+            _Insurancefield.value = PayCal.AsuransiSetahun / 12;
             CariPengaliJkJkk();
+            CariBasicSetahun();
             CariJKJKKBulanan();
             console.log("TextBox1BasicSalaryFocus::BasicSalary : ",PayCal.BasicSalaryValue);
         }
 
+        /*
         function SetInsuranceApproach(){
             var _InsuranceApproach = getTextboxValue('insurance_field');
             PayCal.InsuranceValue = parseInt(_InsuranceApproach);
             console.log("SetInsuranceApproach::InsuranceApproach : ",PayCal.InsuranceValue);  
         }
+        */
 
         function SetInsurancePremiumValue(){
             var _InsurancePremiumValue = getTextboxValue('insurance_premium_field');
@@ -228,7 +237,7 @@ defined('_JEXEC') or die('Direct Access to this location is not allowed.');
             if(isCheckboxChecked('gross_basic_salary_checkbox'))
                 PayCal.basicSetahun = PayCal.sisaBulan * _basicSalary;
             else
-                PayCal.basicSetahun = PayCal.sisaBulan * (_basicSalary - PayCal.basicSetahun * PayCal.TaxKomponen);
+                PayCal.basicSetahun = PayCal.sisaBulan * (_basicSalary + PayCal.basicSetahun * PayCal.TaxKomponen);
             console.log("CariBasicSetahun::basicSetahun : ",PayCal.basicSetahun);
         }
 
@@ -665,915 +674,1007 @@ defined('_JEXEC') or die('Direct Access to this location is not allowed.');
                 PayCal.JHTValue - PayCal.TaxKomponen;
             } while ( PayCal.TaxPembanding - 12 * PayCal.TaxKomponen < 100 );        
         }
-        </script> <!-- its begin here -->
-         <!-- Start point for main form -->
-        <form id="myForm" name="myForm">
-            <!-- first part -->
-            <table class="table table-striped table-hover" id="FirstGroup">
-                <tbody>
-                    <tr>
-                        <td>
-                            <table class="table table-striped table-hover">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            Tax Status
-                                        </td>
-                                        <td>
-                                            <select class="form-control" id=
-                                            "tax_status_combobox" name=
-                                            "tax_status_combobox" onchange="CariPTKP()">
-                                                <option disabled selected
-                                                value="">
-                                                    </option>
-                                                <option value="TK/0">
-                                                    TK/0
-                                                </option>
-                                                <option value="TK/1">
-                                                    TK/1
-                                                </option>
-                                                <option value="TK/2">
-                                                    TK/2
-                                                </option>
-                                                <option value="TK/3">
-                                                    TK/3
-                                                </option>
-                                                <option value="K/0">
-                                                    K/0
-                                                </option>
-                                                <option value="K/1">
-                                                    K/1
-                                                </option>
-                                                <option value="K/2">
-                                                    K/2
-                                                </option>
-                                                <option value="K/3">
-                                                    K/3
-                                                </option>
-                                                <option value="PH/0">
-                                                    PH/0
-                                                </option>
-                                                <option value="PH/1">
-                                                    PH/1
-                                                </option>
-                                                <option value="PH/2">
-                                                    PH/2
-                                                </option>
-                                                <option value="PH/3">
-                                                    PH/3
-                                                </option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input class="form-control" id=
-                                                "ptkp_field" name=
-                                                "ptkp_field" type=
-                                                "text" >
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            JK/JKK/JPK (%)
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input class="form-control" id=
-                                                "jkjkkjpk_field" name=
-                                                "jkjkkjpk_field" type="number" onchange="SetJKJKKJPKValue()">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <label class=
-                                            "col-lg-2 control-label" for=
-                                            "select">From</label>
-                                            <select class='form-control' id=
-                                            "jkkjpk_combobox" name="jkkjpk_combobox" onchange="SetJKJKKJPKSource()">
-                                                <option disabled selected
-                                                value="">
-                                                    </option>
-                                                <option value="Basic Salary">
-                                                    Basic Salary
-                                                </option>
-                                                <option value="Total Income">
-                                                    Total Income
-                                                </option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            JHT Employee (%)
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input class="form-control" id=
-                                                "jht_field" name="jht_field"
-                                                type="number" onchange="SetJHTValue()">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <label class=
-                                            "col-lg-2 control-label" for=
-                                            "select">From</label>
-                                            <select class='form-control' id=
-                                            "jhtsource" name="jhtsource" onchange="SetJHTSource()">
-                                                <option disabled selected
-                                                value="">
-                                                    </option>
-                                                <option value="Basic Salary">
-                                                    Basic Salary
-                                                </option>
-                                                <option value="Total Income">
-                                                    Total Income
-                                                </option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table class="table table-striped table-hover">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            Insurance Premium
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input class="form-control" id=
-                                                "insurance_premium_field" name=
-                                                "insurance_premium_field" type=
-                                                "number" onchange="SetInsurancePremiumValue()">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Starting month
-                                        </td>
-                                        <td>
-                                            <select class='form-control' id=
-                                            "starting_month_combobox" name=
-                                            "starting_month_combobox" onchange="cariSisaBulan()">
-                                                <option disabled selected
-                                                value="">
-                                                    </option>
-                                                <option value="January">
-                                                    January
-                                                </option>
-                                                <option value="February">
-                                                    February
-                                                </option>
-                                                <option value="March">
-                                                    March
-                                                </option>
-                                                <option value="April">
-                                                    April
-                                                </option>
-                                                <option value="May">
-                                                    May
-                                                </option>
-                                                <option value="June">
-                                                    June
-                                                </option>
-                                                <option value="July">
-                                                    July
-                                                </option>
-                                                <option value="August">
-                                                    August
-                                                </option>
-                                                <option value="September">
-                                                    September
-                                                </option>
-                                                <option value="October">
-                                                    October
-                                                </option>
-                                                <option value="November">
-                                                    November
-                                                </option>
-                                                <option value="Desember">
-                                                    Desember
-                                                </option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                        <td>
-                            <table class="table table-striped table-hover">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            Previous NETT Income
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input class="form-control" id=
-                                                "prev_nett_income_field" name=
-                                                "prev_nett_income_field" type=
-                                                "number" onchange="SetPrevNettIncome()">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Previous Tax Collection
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input class="form-control" id=
-                                                "prev_tax_coll_field" name=
-                                                "prev_tax_coll_field" type=
-                                                "number" onchange="SetPrevTaxCollection()">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
+    </script>
+    <form id="myForm" name="myForm">
+        <table class="tg" id="FirstGroup" width="580px">
+            <tbody>
+                <tr>
+                    <th class="tg-cmwg">PayRoll Calculator</th>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l">
+                        <table class="tg" width="100%">
+                            <tbody>
+                                <tr>
+                                    <th class="tg-031e">Tax Status</th>
+                                    <th class="tg-031e"><select class=
+                                    "form-control" id="tax_status_combobox"
+                                    name="tax_status_combobox" onchange=
+                                    "CariPTKP()">
+                                        <option disabled selected value="">
+                                            </option>
+                                        <option value="TK/0">
+                                            TK/0
+                                        </option>
+                                        <option value="TK/1">
+                                            TK/1
+                                        </option>
+                                        <option value="TK/2">
+                                            TK/2
+                                        </option>
+                                        <option value="TK/3">
+                                            TK/3
+                                        </option>
+                                        <option value="K/0">
+                                            K/0
+                                        </option>
+                                        <option value="K/1">
+                                            K/1
+                                        </option>
+                                        <option value="K/2">
+                                            K/2
+                                        </option>
+                                        <option value="K/3">
+                                            K/3
+                                        </option>
+                                        <option value="PH/0">
+                                            PH/0
+                                        </option>
+                                        <option value="PH/1">
+                                            PH/1
+                                        </option>
+                                        <option value="PH/2">
+                                            PH/2
+                                        </option>
+                                        <option value="PH/3">
+                                            PH/3
+                                        </option>
+                                    </select></th>
+                                    <th class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" dir=
+                                            "rtl" id="ptkp_field" name=
+                                            "ptkp_field" style="width:125px"
+                                            type="text">
+                                        </div>
+                                    </th>
+                                    <th class="tg-031e">Previous NETT
+                                    Income</th>
+                                    <th class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" dir=
+                                            "rtl" id="prev_nett_income_field"
+                                            name="prev_nett_income_field"
+                                            onchange="SetPrevNettIncome()"
+                                            type="number">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td class="tg-031e">JK/JKK/JPK (%)</td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" dir=
+                                            "rtl" id="jkjkkjpk_field"
+                                            maxlength="3" name="jkjkkjpk_field"
+                                            onchange="SetJKJKKJPKValue()"
+                                            oninput=
+                                            "javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            style="width:50px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e"><label class=
+                                    "col-lg-2 control-label" for=
+                                    "select">From</label> <select class=
+                                    "form-control" id="jkkjpk_combobox" name=
+                                    "jkkjpk_combobox" onchange=
+                                    "SetJKJKKJPKSource()">
+                                        <option disabled selected value="">
+                                            </option>
+                                        <option value="Basic Salary">
+                                            Basic Salary
+                                        </option>
+                                        <option value="Total Income">
+                                            Total Income
+                                        </option>
+                                    </select></td>
+                                    <td class="tg-031e">Previous Tax
+                                    Collection</td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" dir=
+                                            "rtl" id="prev_tax_coll_field"
+                                            name="prev_tax_coll_field"
+                                            onchange="SetPrevTaxCollection()"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-031e">JHT Employee (%)</td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" dir=
+                                            "rtl" id="jht_field" maxlength="3"
+                                            name="jht_field" onchange=
+                                            "SetJHTValue()" oninput=
+                                            "javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            style="width:50px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e"><label class=
+                                    "col-lg-2 control-label" for=
+                                    "select">From</label> <select class=
+                                    "form-control" id="jhtsource" name=
+                                    "jhtsource" onchange="SetJHTSource()">
+                                        <option disabled selected value="">
+                                            </option>
+                                        <option value="Basic Salary">
+                                            Basic Salary
+                                        </option>
+                                        <option value="Total Income">
+                                            Total Income
+                                        </option>
+                                    </select></td>
+                                    <td class="tg-031e" colspan="2" rowspan=
+                                    "3">
+                                        <center>
                                             <input class="btn btn-primary"
                                             onclick="GrossNettApproach_func()"
+                                            style=
+                                            "background-color:#F0F0F0;height:100px;font-family: 'Droid Serif', cursive;"
                                             type="button" value=
                                             "Gross/Nett Approach">
-                                        </td>
-                                        <td>
                                             <input class="btn btn-primary"
-                                            onclick="THPApproach_func()" type=
-                                            "button" value="THP Approach">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table><!-- part 2 -->
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h4>
-                        THP Approach
-                    </h4>
-                </div>
-            </div>
-            <table class="table table-striped table-hover" id="SecondGroup">
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            Nett Component
-                        </td>
-                        <td>
-                            Tax
-                        </td>
-                        <td>
-                            Total GROSS
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Target THP
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "targetTHP_field" name="targetTHP_field" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            Adj. Income
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "Nett_adjIncome_field" name=
-                                "Nett_adjIncome_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "Tax_adjIncome_field" name=
-                                "Tax_adjIncome_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "totalGross_adjIncome" name=
-                                "totalGross_adjIncome" type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Fixed Income1
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "fixedIncome1_field" name="fixedIncome1_field"
-                                type="number">
-                            </div>
-                        </td>
-                        <td>
-                            Fixed Income1
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "nett_fixedIncome1_field" name=
-                                "nett_fixedIncome1_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "tax_fixedIncome1_field" name=
-                                "tax_fixedIncome1_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "totalGrossFixedIncome1" name=
-                                "totalGrossFixedIncome1" type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Fixed Income2
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "fixedIncome2_field" name="fixedIncome2_field"
-                                type="number">
-                            </div>
-                        </td>
-                        <td>
-                            Fixed Income2
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "nett_fixedIncome2_field" name=
-                                "nett_fixedIncome2_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "tax_fixedIncome2_field" name=
-                                "tax_fixedIncome2_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "totalGrossFixedIncome2" name=
-                                "totalGrossFixedIncome2" type="number">
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table><!-- Part 3 -->
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h4>
-                        Gross / Nett Approach
-                    </h4>
-                </div>
-            </div>
-            <table class="table table-striped table-hover" id="ThirdGroup">
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            Nett Component
-                        </td>
-                        <td>
-                            Tax
-                        </td>
-                        <td>
-                            Total GROSS
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Basic Salary
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="gross_basic_salary_checkbox"
-                                type="checkbox"> Gross</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="nett_basic_salary_checkbox"
-                                type="checkbox"> Nett</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "basic_salary_field" name="basic_salary_field"
-                                type="number" onchange="TextBox1BasicSalaryFocus()">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "BS_nettComp_field" name="BS_nettComp_field"
-                                placeholder="" type="number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "BS_tax_field" name="BS_tax_field" placeholder=
-                                "" type="number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id="BS_totalGross"
-                                name="BS_totalGross" type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Insurance
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="gross_insurance_checkbox"
-                                type="checkbox"> Gross</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="nett_insurance_checkbox"
-                                type="checkbox"> Nett</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "insurance_field" name="insurance_field" type=
-                                "number" onchange="SetInsuranceApproach()">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "insurance_NettComp_field" name=
-                                "insurance_NettComp_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "insurance_Tax_field" name=
-                                "insurance_Tax_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "insurance_totalGross" name=
-                                "insurance_totalGross" type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            JK / JKK
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="gros_jkjkk_checkbox" type=
-                                "checkbox"> Gross</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="nett_jkjkk_checkbox" type=
-                                "checkbox"> Nett</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id="jkkjkk_field"
-                                name="jkkjkk_field" type="number" onchange="SetJKKValue()">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "jkjkk_NettComp_field" name=
-                                "jkjkk_NettComp_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "jkjkk_Tax_field" name="jkjkk_Tax_field"
-                                placeholder="" type="number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "jkjkk_totalGross" name="jkjkk_totalGross"
-                                type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Income 1
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income1_gross_checkbox" type=
-                                "checkbox"> Gross</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income1_net_checkbox" type=
-                                "checkbox"> Nett</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id="income1_field"
-                                name="income1_field" type="number" onchange="SetNettIncome1()">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income1_NetComp_field" name=
-                                "income1_NetComp_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income1_Tax_field" name="income1_Tax_field"
-                                placeholder="" type="number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "income1_totalGross" name="income1_totalGross"
-                                type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Income 2
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income2_gross_checkbox" type=
-                                "checkbox"> Gross</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income2_net_checkbox" type=
-                                "checkbox"> Nett</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id="income2_field"
-                                name="income2_field" type="number" onchange="SetNettIncome2()">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income2_NetComp_field" name=
-                                "income2_NetComp_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income2_Tax_field" name="income2_Tax_field"
-                                placeholder="" type="number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "income2_totalGross" name="income2_totalGross"
-                                type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Income 3
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income3_gross_checkbox" type=
-                                "checkbox"> Gross</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income3_net_checkbox" type=
-                                "checkbox"> Nett</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id="income3_field"
-                                name="income3_field" type="number" onchange="SetNettIncome3()">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income3_NetComp_field" name=
-                                "income3_NetComp_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income3_Tax_field" name="income3_Tax_field"
-                                placeholder="" type="number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "income3_totalGross" name="income3_totalGross"
-                                type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Income 4
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income4_gross_checkbox" type=
-                                "checkbox"> Gross</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income4_net_checkbox" type=
-                                "checkbox"> Nett</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id="income4_field"
-                                name="income4_field" type="number" onchange="SetNettIncome4()">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income4_NetComp_field" name=
-                                "income4_NetComp_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income4_Tax_field" name="income4_Tax_field"
-                                placeholder="" type="number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "income4_totalGross" name="income4_totalGross"
-                                type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Income 5
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income5_gross_checkbox" type=
-                                "checkbox"> Gross</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income5_net_checkbox" type=
-                                "checkbox"> Nett</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id="income5_field"
-                                name="income5_field" type="number" onchange="SetNettIncome5()">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income5_NetComp_field" name=
-                                "income5_NetComp_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income5_Tax_field" name="income5_Tax_field"
-                                placeholder="" type="number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "income5_totalGross" name="income5_totalGross"
-                                type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Income 6
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income6_gross_checkbox" type=
-                                "checkbox"> Gross</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income6_net_checkbox" type=
-                                "checkbox"> Nett</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id="income6_field"
-                                name="income6_field" type="number" onchange="SetNettIncome6()">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income6_NetComp_field" name=
-                                "income6_NetComp_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income6_Tax_field" name="income6_Tax_field"
-                                placeholder="" type="number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "income6_totalGross" name="income6_totalGross"
-                                type="number">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Income 7
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income7_gross_checkbox" type=
-                                "checkbox"> Gross</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label><input id="income7_net_checkbox" type=
-                                "checkbox"> Nett</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id="income7_field"
-                                name="income7_field" type="number" onchange="SetNettIncome7()">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income7_NetComp_field" name=
-                                "income7_NetComp_field" placeholder="" type=
-                                "number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" disabled id=
-                                "income7_Tax_field" name="income7_Tax_field"
-                                placeholder="" type="number">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input class="form-control" id=
-                                "income7_totalGross" name="income7_totalGross"
-                                type="number">
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-striped table-hover">
-                <tbody>
-                    <tr>
-                        <td>
-                            <input class="btn btn-primary" id="hitung_button"
-                            name="hitung_button" onclick="calculate();" type=
-                            "button" value="Calculate">
-                        </td>
-                        <td>
-                            <input class="btn btn-primary" onclick="result()"
-                            type="button" value="Result">
-                        </td>
-                        <td>
-                            <input class="btn btn-primary" onclick=
-                            "resetForm()" type="button" value="Reset">
-                        </td>
-                        <td>
-                            <table class="table table-striped table-hover">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            Total Tax Component
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input class="form-control"
-                                                disabled id="disabledInput"
-                                                name="totalTaxComponent_field"
-                                                placeholder="" type="number">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Total Take Home Pay
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input class="form-control"
-                                                disabled id=
-                                                "total_take_home_pay"
-                                                placeholder="" type="number">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
+                                            onclick="THPApproach_func()" style=
+                                            "background-color:#F0F0F0;height:100px;width:150px;font-family: 'Droid Serif', cursive;"
+                                            type="button" value="THP Approach">
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-031e">Insurance Premium</td>
+                                    <td class="tg-031e" colspan="2">
+                                        <div class="form-group">
+                                            <input class="form-control" dir=
+                                            "rtl" id="insurance_premium_field"
+                                            name="insurance_premium_field"
+                                            onchange=
+                                            "SetInsurancePremiumValue()" style=
+                                            "width:195px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-031e">Starting month</td>
+                                    <td class="tg-031e" colspan="2">
+                                    <select class="form-control" id=
+                                    "starting_month_combobox" name=
+                                    "starting_month_combobox" onchange=
+                                    "cariSisaBulan()" style="width:200px">
+                                        <option disabled selected value="">
+                                            </option>
+                                        <option value="January">
+                                            January
+                                        </option>
+                                        <option value="February">
+                                            February
+                                        </option>
+                                        <option value="March">
+                                            March
+                                        </option>
+                                        <option value="April">
+                                            April
+                                        </option>
+                                        <option value="May">
+                                            May
+                                        </option>
+                                        <option value="June">
+                                            June
+                                        </option>
+                                        <option value="July">
+                                            July
+                                        </option>
+                                        <option value="August">
+                                            August
+                                        </option>
+                                        <option value="September">
+                                            September
+                                        </option>
+                                        <option value="October">
+                                            October
+                                        </option>
+                                        <option value="November">
+                                            November
+                                        </option>
+                                        <option value="Desember">
+                                            Desember
+                                        </option>
+                                    </select></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h4>THP Approach</h4>
+                            </div>
+                        </div>
+                        <table class="tg" id="SecondGroup" width="100%">
+                            <tbody>
+                                <tr>
+                                    <th class="tg-031e" colspan="3"></th>
+                                    <th class="tg-031e">Nett Component</th>
+                                    <th class="tg-031e">Tax</th>
+                                    <th class="tg-031e">Total GROSS</th>
+                                </tr>
+                                <tr>
+                                    <td class="tg-031e">Target THP</td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "targetTHP_field" name=
+                                            "targetTHP_field" style=
+                                            "width:120px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">Adj. Income</td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="Nett_adjIncome_field"
+                                            name="Nett_adjIncome_field"
+                                            placeholder="" style="width:90px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="Tax_adjIncome_field"
+                                            name="Tax_adjIncome_field"
+                                            placeholder="" style="width:90px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "totalGross_adjIncome" name=
+                                            "totalGross_adjIncome" style=
+                                            "width:90px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-031e">Fixed Income1</td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "fixedIncome1_field" name=
+                                            "fixedIncome1_field" style=
+                                            "width:120px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">Fixed Income1</td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id=
+                                            "nett_fixedIncome1_field" name=
+                                            "nett_fixedIncome1_field"
+                                            placeholder="" style="width:90px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id=
+                                            "tax_fixedIncome1_field" name=
+                                            "tax_fixedIncome1_field"
+                                            placeholder="" style="width:90px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "totalGrossFixedIncome1" name=
+                                            "totalGrossFixedIncome1" style=
+                                            "width:90px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-031e">Fixed Income2</td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "fixedIncome2_field" name=
+                                            "fixedIncome2_field" style=
+                                            "width:120px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">Fixed Income2</td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id=
+                                            "nett_fixedIncome2_field" name=
+                                            "nett_fixedIncome2_field"
+                                            placeholder="" style="width:90px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id=
+                                            "tax_fixedIncome2_field" name=
+                                            "tax_fixedIncome2_field"
+                                            placeholder="" style="width:90px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "totalGrossFixedIncome2" name=
+                                            "totalGrossFixedIncome2" style=
+                                            "width:90px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tg-yw4l">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h4>Gross / Nett Approach</h4>
+                            </div>
+                        </div>
+                        <table class="tg" id="ThirdGroup" width="100%">
+                            <tbody>
+                                <tr>
+                                    <th class="tg-031e" colspan="6"></th>
+                                    <th class="tg-yw4l">Nett Component</th>
+                                    <th class="tg-yw4l">Tax</th>
+                                    <th class="tg-yw4l">Total GROSS</th>
+                                </tr>
+                                <tr>
+                                    <td class="tg-031e">Basic Salary</td>
+                                    <td class="tg-031e">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "gross_basic_salary_checkbox"
+                                                type="checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">Gross</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "nett_basic_salary_checkbox"
+                                                type="checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Nett</td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "basic_salary_field" name=
+                                            "basic_salary_field" onchange=
+                                            "TextBox1BasicSalaryFocus()" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="BS_nettComp_field"
+                                            name="BS_nettComp_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="BS_tax_field" name=
+                                            "BS_tax_field" placeholder=""
+                                            style="width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "BS_totalGross" name=
+                                            "BS_totalGross" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-031e">Insurance</td>
+                                    <td class="tg-031e">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "gross_insurance_checkbox"
+                                                type="checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-031e">Gross</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "nett_insurance_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Nett</td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "insurance_field" name=
+                                            "insurance_field" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id=
+                                            "insurance_NettComp_field" name=
+                                            "insurance_NettComp_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="insurance_Tax_field"
+                                            name="insurance_Tax_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "insurance_totalGross" name=
+                                            "insurance_totalGross" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-yw4l">JK/JKK</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id="gros_jkjkk_checkbox"
+                                                type="checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Gross</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id="nett_jkjkk_checkbox"
+                                                type="checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Nett</td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "jkkjkk_field" name="jkkjkk_field"
+                                            onchange="SetJKKValue()" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="jkjkk_NettComp_field"
+                                            name="jkjkk_NettComp_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="jkjkk_Tax_field" name=
+                                            "jkjkk_Tax_field" placeholder=""
+                                            style="width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "jkjkk_totalGross" name=
+                                            "jkjkk_totalGross" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-yw4l">Income 1</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income1_gross_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Gross</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income1_net_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Nett</td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income1_field" name=
+                                            "income1_field" onchange=
+                                            "SetNettIncome1()" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income1_NetComp_field"
+                                            name="income1_NetComp_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income1_Tax_field"
+                                            name="income1_Tax_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income1_totalGross" name=
+                                            "income1_totalGross" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-yw4l">Income 2</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income2_gross_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Gross</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income2_net_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Nett</td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income2_field" name=
+                                            "income2_field" onchange=
+                                            "SetNettIncome2()" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income2_NetComp_field"
+                                            name="income2_NetComp_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income2_Tax_field"
+                                            name="income2_Tax_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income2_totalGross" name=
+                                            "income2_totalGross" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-yw4l">Income 3</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income3_gross_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Gross</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income3_net_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Nett</td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income3_field" name=
+                                            "income3_field" onchange=
+                                            "SetNettIncome3()" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income3_NetComp_field"
+                                            name="income3_NetComp_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income3_Tax_field"
+                                            name="income3_Tax_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income3_totalGross" name=
+                                            "income3_totalGross" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-yw4l">Income 4</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income4_gross_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Gross</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income4_net_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Nett</td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income4_field" name=
+                                            "income4_field" onchange=
+                                            "SetNettIncome4()" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income4_NetComp_field"
+                                            name="income4_NetComp_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income4_Tax_field"
+                                            name="income4_Tax_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income4_totalGross" name=
+                                            "income4_totalGross" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-yw4l">Income 5</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income5_gross_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Gross</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income5_net_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Nett</td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income5_field" name=
+                                            "income5_field" onchange=
+                                            "SetNettIncome5()" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income5_NetComp_field"
+                                            name="income5_NetComp_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income5_Tax_field"
+                                            name="income5_Tax_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income5_totalGross" name=
+                                            "income5_totalGross" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-yw4l">Income 6</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income6_gross_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Gross</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income6_net_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Nett</td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income6_field" name=
+                                            "income6_field" onchange=
+                                            "SetNettIncome6()" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income6_NetComp_field"
+                                            name="income6_NetComp_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income6_Tax_field"
+                                            name="income6_Tax_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income6_totalGross" name=
+                                            "income6_totalGross" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-yw4l">Income 7</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income7_gross_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Gross</td>
+                                    <td class="tg-yw4l">
+                                        <div class="checkbox">
+                                            <center>
+                                                <input id=
+                                                "income7_net_checkbox" type=
+                                                "checkbox">
+                                            </center>
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">Nett</td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income7_field" name=
+                                            "income7_field" onchange=
+                                            "SetNettIncome7()" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income7_NetComp_field"
+                                            name="income7_NetComp_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="income7_Tax_field"
+                                            name="income7_Tax_field"
+                                            placeholder="" style="width:100px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                    <td class="tg-yw4l">
+                                        <div class="form-group">
+                                            <input class="form-control" id=
+                                            "income7_totalGross" name=
+                                            "income7_totalGross" style=
+                                            "width:100px" type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="tg-yw4l" colspan="6" rowspan=
+                                    "2">
+                                        <center>
+                                            <input class="calculate-button" id=
+                                            "hitung_button" name=
+                                            "hitung_button" onclick=
+                                            "calculate();" style=
+                                            "height:40px;width:80px" type=
+                                            "button" value="Calculate">
+                                            <input class="result-button"
+                                            onclick="result()" style=
+                                            "height:40px;width:80px" type=
+                                            "button" value="Result">
+                                            <input class="clear-button"
+                                            onclick="resetForm()" style=
+                                            "height:40px;width:80px" type=
+                                            "button" value="Reset">
+                                        </center>
+                                    </td>
+                                    <td class="tg-yw4l">Total Tax
+                                    Component</td>
+                                    <td class="tg-yw4l" colspan="2">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="disabledInput" name=
+                                            "totalTaxComponent_field"
+                                            placeholder="" style="width:200px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-yw4l">Total Take Home
+                                    Pay</td>
+                                    <td class="tg-yw4l" colspan="2">
+                                        <div class="form-group">
+                                            <input class="form-control"
+                                            disabled id="total_take_home_pay"
+                                            placeholder="" style="width:200px"
+                                            type="number">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
