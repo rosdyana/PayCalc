@@ -258,7 +258,7 @@ function resetForm() {
                 PayCal.pengaliJkJkk = PayCal.basicSetahun || 0;
             }
             else if ( PayCal.JKJKKJPKSource == "Total Income" ){
-                PayCal.PengaliJkJkk = PayCal.NettBasic + PayCal.NettInsurance + PayCal.NettIncome1 + PayCal.NettIncome2 + PayCal.NettIncome3 + PayCal.NettIncome4 + PayCal.NettIncome5 + PayCal.NettIncome6 + PayCal.NettIncome7 + (PayCal.sisaBulan * PayCal.TaxKomponen ) - ( PayCal.sisaBulan * PayCal.PercentJKK * PayCal.TaxKomponen || 0);
+                PayCal.PengaliJkJkk = PayCal.NettBasic + PayCal.NettInsurance + PayCal.NettIncome1 + PayCal.NettIncome2 + PayCal.NettIncome3 + PayCal.NettIncome4 + PayCal.NettIncome5 + PayCal.NettIncome6 + PayCal.NettIncome7 + (PayCal.sisaBulan * PayCal.TaxKomponen ) - ( PayCal.sisaBulan * PayCal.PercentJKK * PayCal.TaxKomponen) || 0;
             }
             console.log("CariPengaliJkJkk::PengaliJkJkk : ",PayCal.pengaliJkJkk);
         }
@@ -364,40 +364,43 @@ function resetForm() {
         function CariTaxKomponenAwalLooping(){
             if ( PayCal.TaxPembanding === 0 )
                 PayCal.TaxKomponen = 0;
-            else if ( PayCal.TaxPembanding <= 120000 ) 
-                PayCal.TaxKomponen = 100;
-            else if ( PayCal.TaxPembanding <= 240000 )
-                PayCal.TaxKomponen = 1000;
-            else if ( PayCal.TaxPembanding <= 360000 )
-                PayCal.TaxKomponen = 2000;
-            else if ( PayCal.TaxPembanding <= 480000 )
-                PayCal.TaxKomponen = 3000;
-            else if ( PayCal.TaxPembanding <= 600000 )
-                PayCal.TaxKomponen = 4000;
-            else if ( PayCal.TaxPembanding <= 720000 ) 
-                PayCal.TaxKomponen = 5000;
-            else if ( PayCal.TaxPembanding <= 840000 )
-                PayCal.TaxKomponen = 6000;
-            else if ( PayCal.TaxPembanding <= 960000 )
-                PayCal.TaxKomponen = 7000;
-            else if ( PayCal.TaxPembanding <= 1080000 )
-                PayCal.TaxKomponen = 8000;
-            else if ( PayCal.TaxPembanding <= 1200000 )
-                PayCal.TaxKomponen = 9000;
-            else if ( PayCal.TaxPembanding <= 1500000 )
-                PayCal.TaxKomponen = 10000;
-            else if ( PayCal.TaxPembanding <= 3000000 )
-                PayCal.TaxKomponen = 125000;
-            else if ( PayCal.TaxPembanding <= 5000000 ) 
-                PayCal.TaxKomponen = 250000;
-            else if ( PayCal.TaxPembanding <= 9000000 )
-                PayCal.TaxKomponen = 400000;
-            else if ( PayCal.TaxPembanding <= 20000000 )
-                PayCal.TaxKomponen = 750000;
-            else if ( PayCal.TaxPembanding <= 50000000 )
-                PayCal.TaxKomponen = 1650000;
-            else if ( PayCal.TaxPembanding <= 75000000 )
-                PayCal.TaxKomponen = 4100000;
+            else{
+                if ( PayCal.TaxPembanding <= 120000 ) 
+                    PayCal.TaxKomponen = 100;
+                else if ( PayCal.TaxPembanding <= 240000 )
+                    PayCal.TaxKomponen = 1000;
+                else if ( PayCal.TaxPembanding <= 360000 )
+                    PayCal.TaxKomponen = 2000;
+                else if ( PayCal.TaxPembanding <= 480000 )
+                    PayCal.TaxKomponen = 3000;
+                else if ( PayCal.TaxPembanding <= 600000 )
+                    PayCal.TaxKomponen = 4000;
+                else if ( PayCal.TaxPembanding <= 720000 ) 
+                    PayCal.TaxKomponen = 5000;
+                else if ( PayCal.TaxPembanding <= 840000 )
+                    PayCal.TaxKomponen = 6000;
+                else if ( PayCal.TaxPembanding <= 960000 )
+                    PayCal.TaxKomponen = 7000;
+                else if ( PayCal.TaxPembanding <= 1080000 )
+                    PayCal.TaxKomponen = 8000;
+                else if ( PayCal.TaxPembanding <= 1200000 )
+                    PayCal.TaxKomponen = 9000;
+                else if ( PayCal.TaxPembanding <= 1500000 )
+                    PayCal.TaxKomponen = 10000;
+                else if ( PayCal.TaxPembanding <= 3000000 )
+                    PayCal.TaxKomponen = 125000;
+                else if ( PayCal.TaxPembanding <= 5000000 ) 
+                    PayCal.TaxKomponen = 250000;
+                else if ( PayCal.TaxPembanding <= 9000000 )
+                    PayCal.TaxKomponen = 400000;
+                else if ( PayCal.TaxPembanding <= 20000000 )
+                    PayCal.TaxKomponen = 750000;
+                else if ( PayCal.TaxPembanding <= 50000000 )
+                    PayCal.TaxKomponen = 1650000;
+                else if ( PayCal.TaxPembanding <= 75000000 )
+                    PayCal.TaxKomponen = 4100000;
+            }
+            
             console.log("==========CariTaxKomponenAwalLooping==========");
             console.log("CariTaxKomponenAwalLooping::TaxKomponen :", PayCal.TaxKomponen);
             console.log("CariTaxKomponenAwalLooping::TaxPembanding :",PayCal.TaxPembanding);
@@ -616,14 +619,16 @@ function resetForm() {
             var TotalTakeHomePay = document.getElementById('total_take_home_pay');
 
             CariTaxKomponenAwalLooping();
-            var pembandingnya = PayCal.TaxPembanding - 12 * PayCal.TaxKomponen;
+            var pembandingnya = PayCal.TaxPembanding - (12 * PayCal.TaxKomponen);
+			console.log("looping awal : ", pembandingnya);
+			var pengali = 1.00025;
             if(pembandingnya === 0)
             {
                 alert('Cek kembali input anda')
             }
             else{
                 do {
-                    PayCal.TaxKomponen = parseInt(PayCal.TaxKomponen * 1.00025);
+                    PayCal.TaxKomponen = parseInt(PayCal.TaxKomponen * pengali);
                     CariPercent();  
                     CariNett();
                     CariPTKP();
@@ -635,7 +640,7 @@ function resetForm() {
                     CariPKP();
                     HitungPajak();
 
-                    PayCal.TaxPembanding = PayCal.TaxPembanding;
+                    //PayCal.TaxPembanding = PayCal.TaxPembanding;
                     //PayCal.TaxKomponen = parseInt(PayCal.TaxKomponen * 12);
                     NettBasicAkhir.value = PayCal.NettBasic / PayCal.sisaBulan || 0;
                     NettInsuranceAkhir.value = parseInt(PayCal.NettInsurance / PayCal.sisaBulan) || 0;
@@ -680,7 +685,10 @@ function resetForm() {
                     ( PayCal.NettIncome6 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome6 ) +
                     ( PayCal.NettIncome7 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome7 ) -
                     PayCal.JHTValue - PayCal.TaxKomponen).formatMoney();
-                } while ( PayCal.TaxPembanding - (12 * PayCal.TaxKomponen) < 100 );    
+					pengali++;
+					console.log("looping akhir : ", PayCal.TaxPembanding - 12 * PayCal.TaxKomponen);
+                } 
+                while ( PayCal.TaxPembanding - 12 * PayCal.TaxKomponen < 100 );    
             }
                 
         }
