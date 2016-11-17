@@ -1,5 +1,5 @@
-function resetForm() {
-            document.getElementById("myForm").reset();
+		function resetForm() {
+            document.getElementById("PayrollCalculator").reset();
         }
 
         var logger = function()
@@ -190,7 +190,7 @@ function resetForm() {
 
         function CariJKJKKBulanan(){
             var JKJKK_field = document.getElementById("jkkjkk_field");
-            PayCal.JKJKKBulanan = PayCal.pengaliJkJkk / PayCal.sisaBulan * PayCal.JKJKKJPKValue / 100 || 0;
+            PayCal.JKJKKBulanan = PayCal.pengaliJkJkk / PayCal.sisaBulan * (PayCal.JKJKKJPKValue / 100) || 0;
             JKJKK_field.value = PayCal.JKJKKBulanan;
             console.log("CariJKJKKBulanan::JKJKKBulanan : ",PayCal.JKJKKBulanan);
         }
@@ -235,7 +235,7 @@ function resetForm() {
             if(isCheckboxChecked('gross_basic_salary_checkbox'))
                 PayCal.basicSetahun = PayCal.sisaBulan * _basicSalary;
             else
-                PayCal.basicSetahun = PayCal.sisaBulan * (_basicSalary + PayCal.basicSetahun * PayCal.TaxKomponen);
+                PayCal.basicSetahun = PayCal.sisaBulan * (_basicSalary + PayCal.PercentBasic * PayCal.TaxKomponen);
             console.log("CariBasicSetahun::basicSetahun : ",PayCal.basicSetahun);
         }
 
@@ -343,17 +343,19 @@ function resetForm() {
 
         //calculate the tax
         function HitungPajak(){
-            if ( PayCal.PKP <= 50000000 )
-                PayCal.TaxPembanding = parseInt(0.05 * PayCal.PKP) || 0;
-            else 
-            {
-                if ( PayCal.PKP <= 250000000 && PayCal.PKP > 50000000 )
-                    PayCal.TaxPembanding = 2500000 + (0.15 * (PayCal.PKP - 50000000)) || 0;
-                else if ( PayCal.PKP <= 500000000 && PayCal.PKP > 250000000 )
-                    PayCal.TaxPembanding = 32500000 + (0.25 * (PayCal.PKP - 250000000) || 0);
-                else if ( PayCal.PKP >= 500000000 )
-                    PayCal.TaxPembanding = 95000000 + (0.3 * (PayCal.PKP - 500000000)) || 0;
-            }
+			if (PayCal.PKP <= 50000000){
+				PayCal.TaxPembanding = 0.05 * PayCal.PKP;
+			}
+			else{
+				if(PayCal.PKP <= 250000000 && PayCal.PKP > 50000000){
+					PayCal.TaxPembanding = 2500000 + (0.15 * (PayCal.PKP - 50000000));
+				}
+				else{
+					if(PayCal.PKP >= 500000000){
+						PayCal.TaxPembanding = 95000000 + (0.3 * (PayCal.PKP - 500000000));
+					}
+				}
+			}
 
             console.log("==========HitungPajak==========");
             console.log("HitungPajak::TaxPembanding :",PayCal.TaxPembanding);
@@ -641,7 +643,7 @@ function resetForm() {
                     HitungPajak();
 
                     //PayCal.TaxPembanding = PayCal.TaxPembanding;
-                    //PayCal.TaxKomponen = parseInt(PayCal.TaxKomponen * 12);
+                    PayCal.TaxKomponen = parseInt(PayCal.TaxKomponen * 12);
                     NettBasicAkhir.value = PayCal.NettBasic / PayCal.sisaBulan || 0;
                     NettInsuranceAkhir.value = parseInt(PayCal.NettInsurance / PayCal.sisaBulan) || 0;
                     NettJKKAkhir.value = PayCal.NettJKK / PayCal.sisaBulan || 0;
@@ -685,10 +687,10 @@ function resetForm() {
                     ( PayCal.NettIncome6 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome6 ) +
                     ( PayCal.NettIncome7 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome7 ) -
                     PayCal.JHTValue - PayCal.TaxKomponen).formatMoney();
-					pengali++;
+					pembandingnya++;
 					console.log("looping akhir : ", PayCal.TaxPembanding - 12 * PayCal.TaxKomponen);
                 } 
-                while ( PayCal.TaxPembanding - 12 * PayCal.TaxKomponen < 100 );    
+                while ( pembandingnya < 100 );    
             }
                 
         }

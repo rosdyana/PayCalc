@@ -252,7 +252,7 @@
 		PayCal.TaxPembanding = 1;
 		PayCal.TaxKomponen = 1;
 		CariTaxKomponenAwalLooping();
-		var pembandingnya = PayCal.TaxPembanding - (12 * PayCal.TaxKomponen);
+		var pembandingnya = PayCal.TaxPembanding - 12 * PayCal.TaxKomponen;
 		console.log("looping awal : ", pembandingnya);
 		var pengali = 1.00025;
 		if(pembandingnya === 0)
@@ -272,9 +272,8 @@
 				CariSisaBulan();
 				CariPKP();
 				HitungPajak();
-
 				NettBasicAkhir.value = PayCal.NettBasic / PayCal.sisaBulan || 0;
-				NettInsuranceAkhir.value = parseInt(PayCal.NettInsurance / PayCal.sisaBulan) || 0;
+				NettInsuranceAkhir.value = (PayCal.NettInsurance / PayCal.sisaBulan) || 0;
 				NettJKKAkhir.value = PayCal.NettJKK / PayCal.sisaBulan || 0;
 				NettIncome1Akhir.value = PayCal.NettIncome1 / PayCal.sisaBulan || 0;
 				NettIncome2Akhir.value = PayCal.NettIncome2 / PayCal.sisaBulan || 0;
@@ -284,8 +283,8 @@
 				NettIncome6Akhir.value = PayCal.NettIncome6 / PayCal.sisaBulan || 0;
 				NettIncome7Akhir.value = PayCal.NettIncome7 / PayCal.sisaBulan || 0;
 
-				TaxBasicAkhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentBasic) || 0;
-				TaxInsuranceAkhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentInsurance) || 0;
+				TaxBasicAkhir.value = (PayCal.TaxKomponen * PayCal.PercentBasic) || 0;
+				TaxInsuranceAkhir.value = (PayCal.TaxKomponen * PayCal.PercentInsurance) || 0;
 				TaxJKKAkhir.value = PayCal.TaxKomponen * PayCal.PercentJKK || 0;
 				TaxIncome1Akhir.value = PayCal.TaxKomponen * PayCal.PercentIncome1 || 0;
 				TaxIncome2Akhir.value = PayCal.TaxKomponen * PayCal.PercentIncome2 || 0;
