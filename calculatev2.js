@@ -138,6 +138,8 @@
         }
 
 	var PayCal = {};
+	PayCal.TaxKomponen = 0;
+	PayCal.TaxPembanding = 0;
 	
 	function resetForm() {
 		document.getElementById("PayrollCalculator").reset();
@@ -186,19 +188,7 @@
 		SimpanIncome6();
 		SimpanIncome7();
 		HitungInsurance();
-		CariPengaliJkJkk();
 		CariBasicSetahun();
-		CariJKJKKBulanan();
-		CariPengaliJkJkk();
-		CariPTKP();
-		CariPercent();
-		CariNett();
-        CariBasicSetahun();
-        TotalNettSementara();
-        CariBiayaJabatan();
-        CariPKP();
-        HitungPajak();
-		HitungInsurance();
 		CariPengaliJkJkk();
 		CariBasicSetahun();
 		CariJKJKKBulanan();
@@ -251,19 +241,20 @@
 
 		var TotalTaxKomponen = document.getElementById('totalTaxComponent_field');
 		var TotalTakeHomePay = document.getElementById('total_take_home_pay');
-		PayCal.TaxPembanding = 1;
-		PayCal.TaxKomponen = 1;
+
 		CariTaxKomponenAwalLooping();
 		var pembandingnya = PayCal.TaxPembanding - 12 * PayCal.TaxKomponen;
 		console.log("looping awal : ", pembandingnya);
-		var pengali = 1.00025;
-		if(pembandingnya === 0)
-		{
-			alert('Cek kembali input anda')
-		}
-		else{
+		
+		//if(pembandingnya === 0)
+		//{
+			//alert('Cek kembali input anda')
+		//}
+		//else{
 			do {
-				PayCal.TaxKomponen = PayCal.TaxKomponen * pengali;
+				CariTaxKomponenAwalLooping();
+				PayCal.TaxKomponen = PayCal.TaxKomponen * 1.00025;
+				console.log("result::TaxKomponen :",PayCal.TaxKomponen);
 				CariPercent();  
 				CariNett();
 				CariPTKP();
@@ -274,43 +265,45 @@
 				CariSisaBulan();
 				CariPKP();
 				HitungPajak();
+				PayCal.txtTaxkomponen = PayCal.TaxKomponen * 12;
+				console.log("result::txtTaxkomponen :",PayCal.txtTaxkomponen);
 				PayCal.txtTaxPembanding = PayCal.TaxPembanding;
-				console.log("calculate::txtTaxPembanding :",PayCal.txtTaxPembanding);
-				NettBasicAkhir.value = PayCal.NettBasic / PayCal.sisaBulan || 0;
-				NettInsuranceAkhir.value = (PayCal.NettInsurance / PayCal.sisaBulan) || 0;
-				NettJKKAkhir.value = PayCal.NettJKK / PayCal.sisaBulan || 0;
-				NettIncome1Akhir.value = PayCal.NettIncome1 / PayCal.sisaBulan || 0;
-				NettIncome2Akhir.value = PayCal.NettIncome2 / PayCal.sisaBulan || 0;
-				NettIncome3Akhir.value = PayCal.NettIncome3 / PayCal.sisaBulan || 0;
-				NettIncome4Akhir.value = PayCal.NettIncome4 / PayCal.sisaBulan || 0;
-				NettIncome5Akhir.value = PayCal.NettIncome5 / PayCal.sisaBulan || 0;
-				NettIncome6Akhir.value = PayCal.NettIncome6 / PayCal.sisaBulan || 0;
-				NettIncome7Akhir.value = PayCal.NettIncome7 / PayCal.sisaBulan || 0;
+				console.log("result::txtTaxPembanding :",PayCal.txtTaxPembanding);
+				NettBasicAkhir.value = parseInt(PayCal.NettBasic / PayCal.sisaBulan).formatMoney() || 0;
+				NettInsuranceAkhir.value = parseInt(PayCal.NettInsurance / PayCal.sisaBulan).formatMoney() || 0;
+				NettJKKAkhir.value = parseInt(PayCal.NettJKK / PayCal.sisaBulan).formatMoney() || 0;
+				NettIncome1Akhir.value = parseInt(PayCal.NettIncome1 / PayCal.sisaBulan).formatMoney() || 0;
+				NettIncome2Akhir.value = parseInt(PayCal.NettIncome2 / PayCal.sisaBulan).formatMoney() || 0;
+				NettIncome3Akhir.value = parseInt(PayCal.NettIncome3 / PayCal.sisaBulan).formatMoney() || 0;
+				NettIncome4Akhir.value = parseInt(PayCal.NettIncome4 / PayCal.sisaBulan).formatMoney() || 0;
+				NettIncome5Akhir.value = parseInt(PayCal.NettIncome5 / PayCal.sisaBulan).formatMoney() || 0;
+				NettIncome6Akhir.value = parseInt(PayCal.NettIncome6 / PayCal.sisaBulan).formatMoney() || 0;
+				NettIncome7Akhir.value = parseInt(PayCal.NettIncome7 / PayCal.sisaBulan).formatMoney() || 0;
 
-				TaxBasicAkhir.value = (PayCal.TaxKomponen * PayCal.PercentBasic) || 0;
-				TaxInsuranceAkhir.value = (PayCal.TaxKomponen * PayCal.PercentInsurance) || 0;
-				TaxJKKAkhir.value = PayCal.TaxKomponen * PayCal.PercentJKK || 0;
-				TaxIncome1Akhir.value = PayCal.TaxKomponen * PayCal.PercentIncome1 || 0;
-				TaxIncome2Akhir.value = PayCal.TaxKomponen * PayCal.PercentIncome2 || 0;
-				TaxIncome3Akhir.value = PayCal.TaxKomponen * PayCal.PercentIncome3 || 0;
-				TaxIncome4Akhir.value = PayCal.TaxKomponen * PayCal.PercentIncome4 || 0;
-				TaxIncome5Akhir.value = PayCal.TaxKomponen * PayCal.PercentIncome5 || 0;
-				TaxIncome6Akhir.value = PayCal.TaxKomponen * PayCal.PercentIncome6 || 0;
-				TaxIncome7Akhir.value = PayCal.TaxKomponen * PayCal.PercentIncome7 || 0;
+				TaxBasicAkhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentBasic).formatMoney() || 0;
+				TaxInsuranceAkhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentInsurance).formatMoney() || 0;
+				TaxJKKAkhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentJKK).formatMoney() || 0;
+				TaxIncome1Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome1).formatMoney() || 0;
+				TaxIncome2Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome2).formatMoney() || 0;
+				TaxIncome3Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome3).formatMoney() || 0;
+				TaxIncome4Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome4).formatMoney() || 0;
+				TaxIncome5Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome5).formatMoney() || 0;
+				TaxIncome6Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome6).formatMoney() || 0;
+				TaxIncome7Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome7).formatMoney() || 0;
 
-				TotalGrossBasicSalary.value = parseInt(( PayCal.NettBasic / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentBasic )) || 0;
-				TotalGrossInsurance.value = parseInt(( PayCal.NettInsurance / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentInsurance )) || 0;
-				TotalGrossJKK.value = ( PayCal.NettJKK / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentJKK ) || 0;
-				TotalGrossIncome1.value = ( PayCal.NettIncome1 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome1 ) || 0;
-				TotalGrossIncome2.value = ( PayCal.NettIncome2 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome2 ) || 0;
-				TotalGrossIncome3.value = ( PayCal.NettIncome3 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome3 ) || 0;
-				TotalGrossIncome4.value = ( PayCal.NettIncome4 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome4 ) || 0;
-				TotalGrossIncome5.value = ( PayCal.NettIncome5 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome5 ) || 0;
-				TotalGrossIncome6.value = ( PayCal.NettIncome6 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome6 ) || 0;
-				TotalGrossIncome7.value = ( PayCal.NettIncome7 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome7 ) || 0;
+				TotalGrossBasicSalary.value = parseInt(( PayCal.NettBasic / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentBasic )).formatMoney() || 0;
+				TotalGrossInsurance.value = parseInt(( PayCal.NettInsurance / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentInsurance )).formatMoney() || 0;
+				TotalGrossJKK.value = parseInt(( PayCal.NettJKK / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentJKK )).formatMoney() || 0;
+				TotalGrossIncome1.value = parseInt(( PayCal.NettIncome1 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome1 )).formatMoney() || 0;
+				TotalGrossIncome2.value = parseInt(( PayCal.NettIncome2 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome2 )).formatMoney() || 0;
+				TotalGrossIncome3.value = parseInt(( PayCal.NettIncome3 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome3 )).formatMoney() || 0;
+				TotalGrossIncome4.value = parseInt(( PayCal.NettIncome4 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome4 )).formatMoney() || 0;
+				TotalGrossIncome5.value = parseInt(( PayCal.NettIncome5 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome5 )).formatMoney() || 0;
+				TotalGrossIncome6.value = parseInt(( PayCal.NettIncome6 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome6 )).formatMoney() || 0;
+				TotalGrossIncome7.value = parseInt(( PayCal.NettIncome7 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome7 )).formatMoney() || 0;
 
-				TotalTaxKomponen.value = (PayCal.TaxKomponen).formatMoney();
-				TotalTakeHomePay.value = (( PayCal.NettBasic / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentBasic ) +
+				TotalTaxKomponen.value = parseInt(PayCal.TaxKomponen).formatMoney();
+				TotalTakeHomePay.value = parseInt(( PayCal.NettBasic / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentBasic ) +
 				( PayCal.NettIncome1 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome1 ) +
 				( PayCal.NettIncome2 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome2 ) +
 				( PayCal.NettIncome3 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome3 ) +
@@ -319,12 +312,12 @@
 				( PayCal.NettIncome6 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome6 ) +
 				( PayCal.NettIncome7 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome7 ) -
 				PayCal.JHTValue - PayCal.TaxKomponen).formatMoney();
-				pembandingnya++;
 				console.log("looping akhir : ", PayCal.TaxPembanding - 12 * PayCal.TaxKomponen);
 				console.log("TotalTakeHomePay: ",TotalTakeHomePay.value);
+				pembandingnya++;
 			} 
 			while ( pembandingnya < 100 );    
-		}
+		//}
 			
 	}
 	//button function end
@@ -829,9 +822,22 @@
 		console.log("CariBiayaJabatan::BiayaJabatan : ",PayCal.BiayaJabatan);
 	}
 	
+	//hitung pengali jkjkk
+	function CariPengaliJkJkk(){
+		if ( PayCal.JKJKKJPKSource == "Basic Salary" )
+		{
+			PayCal.PengaliJkJkk = PayCal.BasicSetahun;
+		}
+		else if ( PayCal.JKJKKJPKSource == "Total Income" ){
+			PayCal.PengaliJkJkk = (PayCal.NettBasic + PayCal.NettInsurance + PayCal.NettIncome1 + PayCal.NettIncome2 + PayCal.NettIncome3 + PayCal.NettIncome4 + PayCal.NettIncome5 + PayCal.NettIncome6 + PayCal.NettIncome7 + (PayCal.SisaBulan * PayCal.TaxKomponen ) - ( PayCal.SisaBulan * PayCal.PercentJKK * PayCal.TaxKomponen));
+		}
+		console.log("CariPengaliJkJkk::PengaliJkJkk : ",PayCal.PengaliJkJkk);
+	}
+	
 	function CariPKP(){
 		var TotalSementaraPlusSBLM = (PayCal.TotalNett + PayCal.PrevNettIncome + PayCal.SisaBulan * PayCal.TaxKomponen) || 0;
-		PayCal.PKP = (TotalSementaraPlusSBLM - PayCal.PTKP - (0.02 * PayCal.PengaliJkJkk) - PayCal.BiayaJabatan) ||0;	
+		var asu = 0.02 * PayCal.PengaliJkJkk;
+		PayCal.PKP = (TotalSementaraPlusSBLM - PayCal.PTKP - asu - PayCal.BiayaJabatan) ||0;	
 		if(PayCal.PKP < 0 ){
 			PayCal.PKP = 0;
 		}
@@ -843,18 +849,6 @@
 		console.log("CariPKP::TotalSementaraPlusSBLM : ", TotalSementaraPlusSBLM);
 		console.log("==========CariPKP==========");
 	}
-	
-	//hitung pengali jkjkk
-	function CariPengaliJkJkk(){
-		if ( PayCal.JKJKKJPKSource == "Basic Salary" )
-		{
-			PayCal.pengaliJkJkk = PayCal.BasicSetahun;
-		}
-		else if ( PayCal.JKJKKJPKSource == "Total Income" ){
-			PayCal.PengaliJkJkk = (PayCal.NettBasic + PayCal.NettInsurance + PayCal.NettIncome1 + PayCal.NettIncome2 + PayCal.NettIncome3 + PayCal.NettIncome4 + PayCal.NettIncome5 + PayCal.NettIncome6 + PayCal.NettIncome7 + (PayCal.SisaBulan * PayCal.TaxKomponen ) - ( PayCal.SisaBulan * PayCal.PercentJKK * PayCal.TaxKomponen));
-		}
-		console.log("CariPengaliJkJkk::PengaliJkJkk : ",PayCal.pengaliJkJkk);
-	}
 
 	function HitungPajak(){
 		if (PayCal.PKP <= 50000000){
@@ -865,7 +859,7 @@
 				PayCal.TaxPembanding = (2500000 + (0.15 * (PayCal.PKP - 50000000)));
 			}
 			else{
-				if(PayCal.PKP >= 500000000 && PayCal.PKP > 250000000 ){
+				if(PayCal.PKP <= 500000000 && PayCal.PKP > 250000000 ){
 					PayCal.TaxPembanding = (32500000 + (0.25 * (PayCal.PKP - 250000000)));
 				}
 				else{
@@ -883,7 +877,7 @@
 	
 	//hitung JKJKK
 	function CariJKJKKBulanan(){
-		PayCal.JKJKKBulanan = (PayCal.pengaliJkJkk / PayCal.SisaBulan * (PayCal.JKJKKJPKValue / 100));
+		PayCal.JKJKKBulanan = (PayCal.PengaliJkJkk / PayCal.SisaBulan * (PayCal.JKJKKJPKValue / 100));
 		document.PayrollCalculator.jkkjkk_field.value = PayCal.JKJKKBulanan;
 		console.log("CariJKJKKBulanan::JKJKKBulanan : ",PayCal.JKJKKBulanan);
 	}
