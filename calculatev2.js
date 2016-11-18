@@ -187,6 +187,7 @@
 		SimpanIncome5();
 		SimpanIncome6();
 		SimpanIncome7();
+		CariSisaBulan();
 		HitungInsurance();
 		CariBasicSetahun();
 		CariPengaliJkJkk();
@@ -246,13 +247,13 @@
 		var pembandingnya = PayCal.TaxPembanding - 12 * PayCal.TaxKomponen;
 		console.log("looping awal : ", pembandingnya);
 		
-		//if(pembandingnya === 0)
-		//{
-			//alert('Cek kembali input anda')
-		//}
-		//else{
+		if(pembandingnya === 0)
+		{
+			alert('Cek kembali input anda')
+		}
+		else{
 			do {
-				CariTaxKomponenAwalLooping();
+				//CariTaxKomponenAwalLooping();
 				PayCal.TaxKomponen = PayCal.TaxKomponen * 1.00025;
 				console.log("result::TaxKomponen :",PayCal.TaxKomponen);
 				CariPercent();  
@@ -262,13 +263,12 @@
 				TotalNettSementara();
 				CariBiayaJabatan();
 				CariPengaliJkJkk();
-				CariSisaBulan();
 				CariPKP();
 				HitungPajak();
-				PayCal.txtTaxkomponen = PayCal.TaxKomponen * 12;
-				console.log("result::txtTaxkomponen :",PayCal.txtTaxkomponen);
 				PayCal.txtTaxPembanding = PayCal.TaxPembanding;
 				console.log("result::txtTaxPembanding :",PayCal.txtTaxPembanding);
+				PayCal.txtTaxkomponen = PayCal.TaxKomponen * 12;
+				console.log("result::txtTaxkomponen :",PayCal.txtTaxkomponen);
 				NettBasicAkhir.value = parseInt(PayCal.NettBasic / PayCal.sisaBulan).formatMoney() || 0;
 				NettInsuranceAkhir.value = parseInt(PayCal.NettInsurance / PayCal.sisaBulan).formatMoney() || 0;
 				NettJKKAkhir.value = parseInt(PayCal.NettJKK / PayCal.sisaBulan).formatMoney() || 0;
@@ -314,10 +314,9 @@
 				PayCal.JHTValue - PayCal.TaxKomponen).formatMoney();
 				console.log("looping akhir : ", PayCal.TaxPembanding - 12 * PayCal.TaxKomponen);
 				console.log("TotalTakeHomePay: ",TotalTakeHomePay.value);
-				pembandingnya++;
 			} 
 			while ( pembandingnya < 100 );    
-		//}
+		}
 			
 	}
 	//button function end
