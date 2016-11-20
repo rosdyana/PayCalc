@@ -77,6 +77,8 @@
             for (var i = 0; i < disabledId.length; i++){
                 controlDisableId(disabledId[i], true);
             }
+			var thppertamasu = document.PayrollCalculator.targetTHP_field;
+			thppertamasu.focus();
         }
 
         //disable-enable group from input data
@@ -357,7 +359,7 @@
 	
 	//persen jk-jkk-jpk
 	function SimpanJkJkkJpk(){
-		PayCal.JKJKKJPKValue = parseInt(document.PayrollCalculator.jkjkkjpk_field.value) || 0;
+		PayCal.JKJKKJPKValue = (document.PayrollCalculator.jkjkkjpk_field.value) || 0;
 		console.log("SimpanJkJkkJpk::JKJKKJPKValue : ",PayCal.JKJKKJPKValue);
 	}
 	
@@ -369,7 +371,7 @@
 	
 	//persen jht employee
 	function SimpanJhtEmployee(){
-		PayCal.JHTValue = parseInt(document.PayrollCalculator.jht_field.value) || 0;
+		PayCal.JHTValue = (document.PayrollCalculator.jht_field.value) || 0;
 		console.log("SimpanJhtEmployee::JHTValue : ",PayCal.JHTValue); 
 	}
 	
