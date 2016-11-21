@@ -1,5 +1,6 @@
 		function resetForm() {
-            document.getElementById("PayrollCalculator").reset();
+            //document.getElementById("PayrollCalculator").reset();
+			window.location.reload(true);
         }
 
         var logger = function()
@@ -255,7 +256,6 @@
 		}
 		else{
 			do {
-				//CariTaxKomponenAwalLooping();
 				PayCal.TaxKomponen = PayCal.TaxKomponen * 1.00025;
 				console.log("result::TaxKomponen :",PayCal.TaxKomponen);
 				CariPercent();  
@@ -313,7 +313,7 @@
 				( PayCal.NettIncome5 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome5 ) +
 				( PayCal.NettIncome6 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome6 ) +
 				( PayCal.NettIncome7 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome7 ) -
-				PayCal.JHTValue - PayCal.TaxKomponen).formatMoney();
+				PayCal.JHTValue + PayCal.TaxKomponen).formatMoney();
 				console.log("looping akhir : ", PayCal.TaxPembanding - 12 * PayCal.TaxKomponen);
 				console.log("TotalTakeHomePay: ",TotalTakeHomePay.value);
 			} 
@@ -633,38 +633,54 @@
 		else{
 			if ( PayCal.txtTaxPembanding <= 120000 ) 
 				PayCal.TaxKomponen = 100;
-			else if ( PayCal.txtTaxPembanding <= 240000 )
-				PayCal.TaxKomponen = 1000;
-			else if ( PayCal.txtTaxPembanding <= 360000 )
-				PayCal.TaxKomponen = 2000;
-			else if ( PayCal.txtTaxPembanding <= 480000 )
-				PayCal.TaxKomponen = 3000;
-			else if ( PayCal.txtTaxPembanding <= 600000 )
-				PayCal.TaxKomponen = 4000;
-			else if ( PayCal.txtTaxPembanding <= 720000 ) 
-				PayCal.TaxKomponen = 5000;
-			else if ( PayCal.txtTaxPembanding <= 840000 )
-				PayCal.TaxKomponen = 6000;
-			else if ( PayCal.txtTaxPembanding <= 960000 )
-				PayCal.TaxKomponen = 7000;
-			else if ( PayCal.txtTaxPembanding <= 1080000 )
-				PayCal.TaxKomponen = 8000;
-			else if ( PayCal.txtTaxPembanding <= 1200000 )
-				PayCal.TaxKomponen = 9000;
-			else if ( PayCal.txtTaxPembanding <= 1500000 )
-				PayCal.TaxKomponen = 10000;
-			else if ( PayCal.txtTaxPembanding <= 3000000 )
-				PayCal.TaxKomponen = 125000;
-			else if ( PayCal.txtTaxPembanding <= 5000000 ) 
-				PayCal.TaxKomponen = 250000;
-			else if ( PayCal.txtTaxPembanding <= 9000000 )
-				PayCal.TaxKomponen = 400000;
-			else if ( PayCal.txtTaxPembanding <= 20000000 )
-				PayCal.TaxKomponen = 750000;
-			else if ( PayCal.txtTaxPembanding <= 50000000 )
-				PayCal.TaxKomponen = 1650000;
-			else if ( PayCal.txtTaxPembanding <= 75000000 )
-				PayCal.TaxKomponen = 4100000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 240000 )
+					PayCal.TaxKomponen = 1000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 360000 )
+					PayCal.TaxKomponen = 2000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 480000 )
+					PayCal.TaxKomponen = 3000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 600000 )
+					PayCal.TaxKomponen = 4000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 720000 ) 
+					PayCal.TaxKomponen = 5000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 840000 )
+					PayCal.TaxKomponen = 6000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 960000 )
+					PayCal.TaxKomponen = 7000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 1080000 )
+					PayCal.TaxKomponen = 8000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 1200000 )
+					PayCal.TaxKomponen = 9000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 1500000 )
+					PayCal.TaxKomponen = 10000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 3000000 )
+					PayCal.TaxKomponen = 125000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 5000000 ) 
+					PayCal.TaxKomponen = 250000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 9000000 )
+					PayCal.TaxKomponen = 400000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 20000000 )
+					PayCal.TaxKomponen = 750000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 50000000 )
+					PayCal.TaxKomponen = 1650000;
+			else 
+				if ( PayCal.txtTaxPembanding <= 75000000 )
+					PayCal.TaxKomponen = 4100000;
 		}
 		
 		console.log("==========CariTaxKomponenAwalLooping==========");
