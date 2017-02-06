@@ -52,10 +52,7 @@
                 controlCheckbox('gros_jkjkk_checkbox', true);
                 //should be in group - TFU
                 var disabledId = ["BS_nettComp_field","BS_tax_field","insurance_NettComp_field","insurance_Tax_field",
-                                    "jkjkk_NettComp_field","jkjkk_Tax_field","income1_NetComp_field","income1_Tax_field",
-                                    "income2_NetComp_field","income2_Tax_field","income3_NetComp_field","income3_Tax_field",
-                                    "income4_NetComp_field","income4_Tax_field","income5_NetComp_field","income5_Tax_field",
-                                    "income6_NetComp_field","income6_Tax_field","income7_NetComp_field","income7_Tax_field"];
+                                    "jkjkk_NettComp_field","jkjkk_Tax_field","income1_NetComp_field","income1_Tax_field"];
                 
                 for (var i = 0; i < disabledId.length; i++) {
                     controlDisableId(disabledId[i], true);   
@@ -73,8 +70,8 @@
             controlCheckbox('gross_insurance_checkbox', false);
             controlCheckbox('gros_jkjkk_checkbox', false);
             //should be in group - TFU
-            var disabledId = ["tax_fixedIncome1_field","tax_fixedIncome2_field","nett_fixedIncome1_field","Tax_adjIncome_field",
-                                "Nett_adjIncome_field","nett_fixedIncome2_field"];
+            var disabledId = ["tax_fixedIncome1_field","nett_fixedIncome1_field","Tax_adjIncome_field",
+                                "Nett_adjIncome_field"];
             for (var i = 0; i < disabledId.length; i++){
                 controlDisableId(disabledId[i], true);
             }
@@ -161,35 +158,16 @@
 		SimpanPrevTaxCollection();
 		SimpanTargetTHP();
 		SimpanFixedIncome1();
-		SimpanFixedIncome2();
 		SimpanBSGrossCb();
 		SimpanInsuranceGrossCb();
 		SimpanJkJkkGrossCb();
 		SimpanIncome1GrossCb();
-		SimpanIncome2GrossCb();
-		SimpanIncome3GrossCb();
-		SimpanIncome4GrossCb();
-		SimpanIncome5GrossCb();
-		SimpanIncome6GrossCb();
-		SimpanIncome7GrossCb();
 		SimpanBSnettCb();
 		SimpanInsurancenettCb();
 		SimpanJkJkknettCb()
 		SimpanIncome1nettCb();
-		SimpanIncome2nettCb();
-		SimpanIncome3nettCb();
-		SimpanIncome4nettCb();
-		SimpanIncome5nettCb();
-		SimpanIncome6nettCb();
-		SimpanIncome7nettCb();
 		SimpanBasicSalary();
 		SimpanIncome1();
-		SimpanIncome2();
-		SimpanIncome3();
-		SimpanIncome4();
-		SimpanIncome5();
-		SimpanIncome6();
-		SimpanIncome7();
 		CariSisaBulan();
 		HitungInsurance();
 		CariBasicSetahun();
@@ -214,34 +192,16 @@
 		var NettInsuranceAkhir = document.getElementById('insurance_NettComp_field');
 		var NettJKKAkhir = document.getElementById('jkjkk_NettComp_field');
 		var NettIncome1Akhir = document.getElementById('income1_NetComp_field');
-		var NettIncome2Akhir = document.getElementById('income2_NetComp_field');
-		var NettIncome3Akhir = document.getElementById('income3_NetComp_field');
-		var NettIncome4Akhir = document.getElementById('income4_NetComp_field');
-		var NettIncome5Akhir = document.getElementById('income5_NetComp_field');
-		var NettIncome6Akhir = document.getElementById('income6_NetComp_field'); 
-		var NettIncome7Akhir = document.getElementById('income7_NetComp_field');
 
 		var TaxBasicAkhir = document.getElementById('BS_tax_field');
 		var TaxInsuranceAkhir = document.getElementById('insurance_Tax_field');
 		var TaxJKKAkhir = document.getElementById('jkjkk_Tax_field'); 
 		var TaxIncome1Akhir = document.getElementById('income1_Tax_field'); 
-		var TaxIncome2Akhir = document.getElementById('income2_Tax_field');
-		var TaxIncome3Akhir = document.getElementById('income3_Tax_field');
-		var TaxIncome4Akhir = document.getElementById('income4_Tax_field');
-		var TaxIncome5Akhir = document.getElementById('income5_Tax_field');
-		var TaxIncome6Akhir = document.getElementById('income6_Tax_field');
-		var TaxIncome7Akhir = document.getElementById('income7_Tax_field');
 
 		var TotalGrossBasicSalary = document.getElementById('BS_totalGross');
 		var TotalGrossInsurance = document.getElementById('insurance_totalGross');
 		var TotalGrossJKK = document.getElementById('jkjkk_totalGross');
 		var TotalGrossIncome1 = document.getElementById('income1_totalGross');
-		var TotalGrossIncome2 = document.getElementById('income2_totalGross');
-		var TotalGrossIncome3 = document.getElementById('income3_totalGross');
-		var TotalGrossIncome4 = document.getElementById('income4_totalGross');
-		var TotalGrossIncome5 = document.getElementById('income5_totalGross');
-		var TotalGrossIncome6 = document.getElementById('income6_totalGross');
-		var TotalGrossIncome7 = document.getElementById('income7_totalGross');
 
 		var TotalTaxKomponen = document.getElementById('totalTaxComponent_field');
 		var TotalTakeHomePay = document.getElementById('total_take_home_pay');
@@ -275,44 +235,20 @@
 				NettInsuranceAkhir.value = parseInt(PayCal.NettInsurance / PayCal.sisaBulan).formatMoney() || 0;
 				NettJKKAkhir.value = parseInt(PayCal.NettJKK / PayCal.sisaBulan).formatMoney() || 0;
 				NettIncome1Akhir.value = parseInt(PayCal.NettIncome1 / PayCal.sisaBulan).formatMoney() || 0;
-				NettIncome2Akhir.value = parseInt(PayCal.NettIncome2 / PayCal.sisaBulan).formatMoney() || 0;
-				NettIncome3Akhir.value = parseInt(PayCal.NettIncome3 / PayCal.sisaBulan).formatMoney() || 0;
-				NettIncome4Akhir.value = parseInt(PayCal.NettIncome4 / PayCal.sisaBulan).formatMoney() || 0;
-				NettIncome5Akhir.value = parseInt(PayCal.NettIncome5 / PayCal.sisaBulan).formatMoney() || 0;
-				NettIncome6Akhir.value = parseInt(PayCal.NettIncome6 / PayCal.sisaBulan).formatMoney() || 0;
-				NettIncome7Akhir.value = parseInt(PayCal.NettIncome7 / PayCal.sisaBulan).formatMoney() || 0;
 
 				TaxBasicAkhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentBasic).formatMoney() || 0;
 				TaxInsuranceAkhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentInsurance).formatMoney() || 0;
 				TaxJKKAkhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentJKK).formatMoney() || 0;
 				TaxIncome1Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome1).formatMoney() || 0;
-				TaxIncome2Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome2).formatMoney() || 0;
-				TaxIncome3Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome3).formatMoney() || 0;
-				TaxIncome4Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome4).formatMoney() || 0;
-				TaxIncome5Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome5).formatMoney() || 0;
-				TaxIncome6Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome6).formatMoney() || 0;
-				TaxIncome7Akhir.value = parseInt(PayCal.TaxKomponen * PayCal.PercentIncome7).formatMoney() || 0;
 
 				TotalGrossBasicSalary.value = parseInt(( PayCal.NettBasic / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentBasic )).formatMoney() || 0;
 				TotalGrossInsurance.value = parseInt(( PayCal.NettInsurance / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentInsurance )).formatMoney() || 0;
 				TotalGrossJKK.value = parseInt(( PayCal.NettJKK / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentJKK )).formatMoney() || 0;
 				TotalGrossIncome1.value = parseInt(( PayCal.NettIncome1 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome1 )).formatMoney() || 0;
-				TotalGrossIncome2.value = parseInt(( PayCal.NettIncome2 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome2 )).formatMoney() || 0;
-				TotalGrossIncome3.value = parseInt(( PayCal.NettIncome3 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome3 )).formatMoney() || 0;
-				TotalGrossIncome4.value = parseInt(( PayCal.NettIncome4 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome4 )).formatMoney() || 0;
-				TotalGrossIncome5.value = parseInt(( PayCal.NettIncome5 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome5 )).formatMoney() || 0;
-				TotalGrossIncome6.value = parseInt(( PayCal.NettIncome6 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome6 )).formatMoney() || 0;
-				TotalGrossIncome7.value = parseInt(( PayCal.NettIncome7 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome7 )).formatMoney() || 0;
 
 				TotalTaxKomponen.value = parseInt(PayCal.TaxKomponen).formatMoney();
 				TotalTakeHomePay.value = parseInt(( PayCal.NettBasic / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentBasic ) +
-				( PayCal.NettIncome1 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome1 ) +
-				( PayCal.NettIncome2 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome2 ) +
-				( PayCal.NettIncome3 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome3 ) +
-				( PayCal.NettIncome4 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome4 ) +
-				( PayCal.NettIncome5 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome5 ) +
-				( PayCal.NettIncome6 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome6 ) +
-				( PayCal.NettIncome7 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome7 ) -
+				( PayCal.NettIncome1 / PayCal.sisaBulan ) + ( PayCal.TaxKomponen * PayCal.PercentIncome1 )-
 				PayCal.JHTValue + PayCal.TaxKomponen).formatMoney();
 				console.log("looping akhir : ", PayCal.TaxPembanding - 12 * PayCal.TaxKomponen);
 				console.log("TotalTakeHomePay: ",TotalTakeHomePay.value);
@@ -443,11 +379,6 @@
 		console.log("SimpanFixedIncome1::FixedIncome1 : ",PayCal.FixedIncome1);  
 	}
 	
-	//nilai fixed income2
-		function SimpanFixedIncome2(){
-		PayCal.FixedIncome2 = parseInt(document.PayrollCalculator.fixedIncome2_field.value) || 0;
-		console.log("SimpanFixedIncome2::FixedIncome2 : ",PayCal.FixedIncome2);  
-	}
 	//fungsi dalam table thp approach - end
 	
 	//fungsi dalam table gross/nett approach
@@ -475,43 +406,7 @@
 		console.log("SimpanIncome1GrossCb::isIncome1GrossCB : ",PayCal.isIncome1GrossCB);
 	}
 	
-	//income2 gross checkbox
-	function SimpanIncome2GrossCb(){
-		PayCal.isIncome2GrossCB = document.PayrollCalculator.income2_gross_checkbox.checked;
-		console.log("SimpanIncome2GrossCb::isIncome2GrossCB : ",PayCal.isIncome2GrossCB);
-	}
-	
-	//income3 gross checkbox
-	function SimpanIncome3GrossCb(){
-		PayCal.isIncome3GrossCB = document.PayrollCalculator.income3_gross_checkbox.checked;
-		console.log("SimpanIncome3GrossCb::isIncome3GrossCB : ",PayCal.isIncome3GrossCB);
-	}
-	
-	//income4 gross checkbox
-	function SimpanIncome4GrossCb(){
-		PayCal.isIncome4GrossCB = document.PayrollCalculator.income4_gross_checkbox.checked;
-		console.log("SimpanIncome4GrossCb::isIncome4GrossCB : ",PayCal.isIncome4GrossCB);
-	}
-	
-	//income5 gross checkbox
-	function SimpanIncome5GrossCb(){
-		PayCal.isIncome5GrossCB = document.PayrollCalculator.income5_gross_checkbox.checked;
-		console.log("SimpanIncome5GrossCb::isIncome5GrossCB : ",PayCal.isIncome5GrossCB);
-	}
-	
-	//income6 gross checkbox
-	function SimpanIncome6GrossCb(){
-		PayCal.isIncome6GrossCB = document.PayrollCalculator.income6_gross_checkbox.checked;
-		console.log("SimpanIncome6GrossCb::isIncome6GrossCB : ",PayCal.isIncome6GrossCB);
-	}
-	
-	//income7 gross checkbox
-	function SimpanIncome7GrossCb(){
-		PayCal.isIncome7GrossCB = document.PayrollCalculator.income7_gross_checkbox.checked;
-		console.log("SimpanIncome7GrossCb::isIncome7GrossCB : ",PayCal.isIncome7GrossCB);
-	}
-	
-		//basic salary nett checkbox
+	//basic salary nett checkbox
 	function SimpanBSnettCb(){
 		PayCal.isBSnettCB = document.PayrollCalculator.nett_basic_salary_checkbox.checked;
 		console.log("SimpanBSnettCb::isBSnettCB : ",PayCal.isBSnettCB);
@@ -534,43 +429,7 @@
 		PayCal.isIncome1nettCB = document.PayrollCalculator.income1_nett_checkbox.checked;
 		console.log("SimpanIncome1nettCb::isIncome1nettCB : ",PayCal.isIncome1nettCB);
 	}
-	
-	//income2 nett checkbox
-	function SimpanIncome2nettCb(){
-		PayCal.isIncome2nettCB = document.PayrollCalculator.income2_nett_checkbox.checked;
-		console.log("SimpanIncome2nettCb::isIncome2nettCB : ",PayCal.isIncome2nettCB);
-	}
-	
-	//income3 nett checkbox
-	function SimpanIncome3nettCb(){
-		PayCal.isIncome3nettCB = document.PayrollCalculator.income3_nett_checkbox.checked;
-		console.log("SimpanIncome3nettCb::isIncome3nettCB : ",PayCal.isIncome3nettCB);
-	}
-	
-	//income4 nett checkbox
-	function SimpanIncome4nettCb(){
-		PayCal.isIncome4nettCB = document.PayrollCalculator.income4_nett_checkbox.checked;
-		console.log("SimpanIncome4nettCb::isIncome4nettCB : ",PayCal.isIncome4nettCB);
-	}
-	
-	//income5 nett checkbox
-	function SimpanIncome5nettCb(){
-		PayCal.isIncome5nettCB = document.PayrollCalculator.income5_nett_checkbox.checked;
-		console.log("SimpanIncome5nettCb::isIncome5nettCB : ",PayCal.isIncome5nettCB);
-	}
-	
-	//income6 nett checkbox
-	function SimpanIncome6nettCb(){
-		PayCal.isIncome6nettCB = document.PayrollCalculator.income6_nett_checkbox.checked;
-		console.log("SimpanIncome6nettCb::isIncome6nettCB : ",PayCal.isIncome6nettCB);
-	}
-	
-	//income7 nett checkbox
-	function SimpanIncome7nettCb(){
-		PayCal.isIncome7nettCB = document.PayrollCalculator.income7_nett_checkbox.checked;
-		console.log("SimpanIncome7nettCb::isIncome7nettCB : ",PayCal.isIncome7nettCB);
-	}
-	
+		
 	//nilai basic salary field
 	function SimpanBasicSalary(){
 		PayCal.BasicSalaryValue = parseInt(document.PayrollCalculator.basic_salary_field.value) || 0;
@@ -581,42 +440,6 @@
 	function SimpanIncome1(){
 		PayCal.Income1Value = parseInt(document.PayrollCalculator.income1_field.value) || 0;
 		console.log("SimpanIncome1::Income1Value : ",PayCal.Income1Value);
-	}
-	
-	//nilai income2
-	function SimpanIncome2(){
-		PayCal.Income2Value = parseInt(document.PayrollCalculator.income2_field.value) || 0;
-		console.log("SimpanIncome2::Income2Value : ",PayCal.Income2Value);
-	}
-	
-	//nilai income3
-	function SimpanIncome3(){
-		PayCal.Income3Value = parseInt(document.PayrollCalculator.income3_field.value) || 0;
-		console.log("SimpanIncome3::Income3Value : ",PayCal.Income3Value);
-	}
-	
-	//nilai income4
-	function SimpanIncome4(){
-		PayCal.Income4Value = parseInt(document.PayrollCalculator.income4_field.value) || 0;
-		console.log("SimpanIncome4::Income4Value : ",PayCal.Income4Value);
-	}
-	
-	//nilai income5
-	function SimpanIncome5(){
-		PayCal.Income5Value = parseInt(document.PayrollCalculator.income5_field.value) || 0;
-		console.log("SimpanIncome1::Income5Value : ",PayCal.Income5Value);
-	}
-	
-	//nilai income6
-	function SimpanIncome6(){
-		PayCal.Income6Value = parseInt(document.PayrollCalculator.income6_field.value) || 0;
-		console.log("SimpanIncome6::Income6Value : ",PayCal.Income6Value);
-	}
-	
-	//nilai income1
-	function SimpanIncome7(){
-		PayCal.Income7Value = parseInt(document.PayrollCalculator.income7_field.value) || 0;
-		console.log("SimpanIncome7::Income7Value : ",PayCal.Income7Value);
 	}
 	
 	//perhitungan dimulai.
@@ -694,35 +517,17 @@
 		var insurance_field = PayCal.InsuranceValue;
 		var jkjkk_field = parseInt(PayCal.JKJKKBulanan);
 		var income1_field = parseInt(PayCal.NettIncome1Value) || 0;
-		var income2_field = parseInt(PayCal.NettIncome2Value) || 0;
-		var income3_field = parseInt(PayCal.NettIncome3Value) || 0;
-		var income4_field = parseInt(PayCal.NettIncome4Value) || 0;
-		var income5_field = parseInt(PayCal.NettIncome5Value) || 0;
-		var income6_field = parseInt(PayCal.NettIncome6Value) || 0;
-		var income7_field = parseInt(PayCal.NettIncome7Value) || 0;
-		var TotalSementara = parseInt(BS_field + insurance_field + jkjkk_field + income1_field + income2_field + income3_field + income4_field + income5_field + income6_field+ income7_field) || 0;
+		var TotalSementara = parseInt(BS_field + insurance_field + jkjkk_field + income1_field) || 0;
 
 		PayCal.PercentBasic = BS_field / TotalSementara || 0;
 		PayCal.PercentInsurance = insurance_field / TotalSementara || 0;
 		PayCal.PercentJKK = jkjkk_field / TotalSementara || 0;
 		PayCal.PercentIncome1 = income1_field / TotalSementara || 0;
-		PayCal.PercentIncome2 = income2_field / TotalSementara || 0;
-		PayCal.PercentIncome3 = income3_field / TotalSementara || 0;
-		PayCal.PercentIncome4 = income4_field / TotalSementara || 0;
-		PayCal.PercentIncome5 = income5_field / TotalSementara || 0;
-		PayCal.PercentIncome6 = income6_field / TotalSementara || 0;
-		PayCal.PercentIncome7 = income7_field / TotalSementara || 0;
 		console.log("==========CariPercent==========");
 		console.log("CariPercent::PercentBasic :",PayCal.PercentBasic);
 		console.log("CariPercent::PercentInsurance :",PayCal.PercentInsurance);
 		console.log("CariPercent::PercentJKK :",PayCal.PercentJKK);
 		console.log("CariPercent::PercentIncome1 :",PayCal.PercentIncome1);
-		console.log("CariPercent::PercentIncome2 :",PayCal.PercentIncome2);
-		console.log("CariPercent::PercentIncome3 :",PayCal.PercentIncome3);
-		console.log("CariPercent::PercentIncome4 :",PayCal.PercentIncome4);
-		console.log("CariPercent::PercentIncome5 :",PayCal.PercentIncome5);
-		console.log("CariPercent::PercentIncome6 :",PayCal.PercentIncome6);
-		console.log("CariPercent::PercentIncome7 :",PayCal.PercentIncome7);
 		console.log("CariPercent::TotalSementara : ",TotalSementara);
 		console.log("==========CariPercent==========");
 	}
@@ -766,66 +571,18 @@
 			PayCal.NettIncome1 = (PayCal.SisaBulan * (PayCal.Income1Value - PayCal.PercentIncome1 * PayCal.TaxKomponen)) || 0;
 		}
 		
-		if(PayCal.isIncome2nettCB){
-			PayCal.NettIncome2 = (PayCal.SisaBulan * PayCal.Income2Value) || 0;
-		}
-		else if(!PayCal.isIncome2nettCB){
-			PayCal.NettIncome2 = (PayCal.SisaBulan * (PayCal.Income2Value - PayCal.PercentIncome2 * PayCal.TaxKomponen)) || 0;
-		}
-		
-		if(PayCal.isIncome3nettCB){
-			PayCal.NettIncome3 = (PayCal.SisaBulan * PayCal.Income3Value) || 0;
-		}
-		else if(!PayCal.isIncome3nettCB){
-			PayCal.NettIncome3 = (PayCal.SisaBulan * (PayCal.Income3Value - PayCal.PercentIncome3 * PayCal.TaxKomponen)) || 0;
-		}
-		
-		if(PayCal.isIncome4nettCB){
-			PayCal.NettIncome4 = (PayCal.SisaBulan * PayCal.Income4Value) || 0;
-		}
-		else if(!PayCal.isIncome4nettCB){
-			PayCal.NettIncome4 = (PayCal.SisaBulan * (PayCal.Income4Value - PayCal.PercentIncome4 * PayCal.TaxKomponen)) || 0;
-		}
-		
-		if(PayCal.isIncome5nettCB){
-			PayCal.NettIncome5 = (PayCal.SisaBulan * PayCal.Income5Value) || 0;
-		}
-		else if(!PayCal.isIncome5nettCB){
-			PayCal.NettIncome5 = (PayCal.SisaBulan * (PayCal.Income5Value - PayCal.PercentIncome5 * PayCal.TaxKomponen)) || 0;
-		}
-		
-		if(PayCal.isIncome6nettCB){
-			PayCal.NettIncome6 = (PayCal.SisaBulan * PayCal.Income6Value) || 0;
-		}
-		else if(!PayCal.isIncome6nettCB){
-			PayCal.NettIncome6 = (PayCal.SisaBulan * (PayCal.Income6Value - PayCal.PercentIncome6 * PayCal.TaxKomponen)) || 0;
-		}
-		
-		if(PayCal.isIncome7nettCB){
-			PayCal.NettIncome7 = (PayCal.SisaBulan * PayCal.Income7Value) || 0;
-		}
-		else if(!PayCal.isIncome7nettCB){
-			PayCal.NettIncome7 = (PayCal.SisaBulan * (PayCal.Income7Value - PayCal.PercentIncome7 * PayCal.TaxKomponen)) || 0;
-		}
-		
 		console.log("==========CariNett==========");
 		console.log("CariNett::NettBasic :",PayCal.NettBasic);
 		console.log("CariNett::NettInsurance :",PayCal.NettInsurance);
 		console.log("CariNett::NettJKK :",PayCal.NettJKK);
 		console.log("CariNett::NettIncome1 :",PayCal.NettIncome1);
-		console.log("CariNett::NettIncome2 :",PayCal.NettIncome2);
-		console.log("CariNett::NettIncome3 :",PayCal.NettIncome3);
-		console.log("CariNett::NettIncome4 :",PayCal.NettIncome4);
-		console.log("CariNett::NettIncome5 :",PayCal.NettIncome5);
-		console.log("CariNett::NettIncome6 :",PayCal.NettIncome6);
-		console.log("CariNett::NettIncome7 :",PayCal.NettIncome7);
 		console.log("CariNett::TaxKomponen :",PayCal.TaxKomponen);
 		console.log("==========CariNett==========");
 	}
 
 	//total nett
 	function TotalNettSementara(){
-		PayCal.TotalNett = parseInt(PayCal.NettBasic + PayCal.NettInsurance + PayCal.NettJKK + PayCal.NettIncome1 + PayCal.NettIncome2 + PayCal.NettIncome3 + PayCal.NettIncome4 + PayCal.NettIncome5 + PayCal.NettIncome6 + PayCal.NettIncome7) || 0;
+		PayCal.TotalNett = parseInt(PayCal.NettBasic + PayCal.NettInsurance + PayCal.NettJKK + PayCal.NettIncome1) || 0;
 		console.log("TotalNettSementara::TotalNett : ", PayCal.TotalNett);
 	}
 	
@@ -846,7 +603,7 @@
 			PayCal.PengaliJkJkk = PayCal.BasicSetahun;
 		}
 		else if ( PayCal.JKJKKJPKSource == "Total Income" ){
-			PayCal.PengaliJkJkk = (PayCal.NettBasic + PayCal.NettInsurance + PayCal.NettIncome1 + PayCal.NettIncome2 + PayCal.NettIncome3 + PayCal.NettIncome4 + PayCal.NettIncome5 + PayCal.NettIncome6 + PayCal.NettIncome7 + (PayCal.SisaBulan * PayCal.TaxKomponen ) - ( PayCal.SisaBulan * PayCal.PercentJKK * PayCal.TaxKomponen));
+			PayCal.PengaliJkJkk = (PayCal.NettBasic + PayCal.NettInsurance + PayCal.NettIncome1 + (PayCal.SisaBulan * PayCal.TaxKomponen ) - ( PayCal.SisaBulan * PayCal.PercentJKK * PayCal.TaxKomponen));
 		}
 		console.log("CariPengaliJkJkk::PengaliJkJkk : ",PayCal.PengaliJkJkk);
 	}
