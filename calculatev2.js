@@ -266,29 +266,29 @@
 		var _ptkp_boxValue = _combobox.options[_combobox.selectedIndex].text;
 		var _ptkp_field = document.PayrollCalculator.ptkp_field;
 		if( _ptkp_boxValue == "TK/0")
-			_ptkp_field.value = 24300000;
+			_ptkp_field.value = 54000000;
 		else if ( _ptkp_boxValue == "TK/1")
-			_ptkp_field.value = 26325000;
+			_ptkp_field.value = 58500000;
 		else if ( _ptkp_boxValue == "TK/2")
-			_ptkp_field.value = 28350000;
+			_ptkp_field.value = 63000000;
 		else if ( _ptkp_boxValue == "TK/3")
-			_ptkp_field.value = 30375000;
+			_ptkp_field.value = 67500000;
 		else if ( _ptkp_boxValue == "K/0")
-			_ptkp_field.value = 26325000;
+			_ptkp_field.value = 58500000;
 		else if ( _ptkp_boxValue == "K/1")
-			_ptkp_field.value = 28350000;
+			_ptkp_field.value = 63000000;
 		else if ( _ptkp_boxValue == "K/2")
-			_ptkp_field.value = 30375000;
+			_ptkp_field.value = 67500000;
 		else if ( _ptkp_boxValue == "K/3")
-			_ptkp_field.value = 32400000;
+			_ptkp_field.value = 72000000;
 		else if ( _ptkp_boxValue == "PH/0")
-			_ptkp_field.value = 48600000;
+			_ptkp_field.value = 112500000;
 		else if ( _ptkp_boxValue == "PH/1")
-			_ptkp_field.value = 50625000;
+			_ptkp_field.value = 117000000;
 		else if ( _ptkp_boxValue == "PH/2")
-			_ptkp_field.value = 52650000;
+			_ptkp_field.value = 121500000;
 		else if ( _ptkp_boxValue == "PH/3")
-			_ptkp_field.value = 54675000; 
+			_ptkp_field.value = 126000000; 
 		PayCal.PTKP = parseInt(_ptkp_field.value) || 0;
 		console.log("CariPTKP::PTKP : ",PayCal.PTKP);      
 	}
@@ -454,56 +454,58 @@
 		if ( PayCal.txtTaxPembanding === 0 )
 			PayCal.TaxKomponen = 0;
 		else{
-			if ( PayCal.txtTaxPembanding <= 120000 ) 
-				PayCal.TaxKomponen = 100;
-			else 
-				if ( PayCal.txtTaxPembanding <= 240000 )
-					PayCal.TaxKomponen = 1000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 360000 )
-					PayCal.TaxKomponen = 2000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 480000 )
-					PayCal.TaxKomponen = 3000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 600000 )
-					PayCal.TaxKomponen = 4000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 720000 ) 
-					PayCal.TaxKomponen = 5000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 840000 )
-					PayCal.TaxKomponen = 6000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 960000 )
-					PayCal.TaxKomponen = 7000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 1080000 )
-					PayCal.TaxKomponen = 8000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 1200000 )
-					PayCal.TaxKomponen = 9000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 1500000 )
-					PayCal.TaxKomponen = 10000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 3000000 )
-					PayCal.TaxKomponen = 125000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 5000000 ) 
-					PayCal.TaxKomponen = 250000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 9000000 )
-					PayCal.TaxKomponen = 400000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 20000000 )
-					PayCal.TaxKomponen = 750000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 50000000 )
-					PayCal.TaxKomponen = 1650000;
-			else 
-				if ( PayCal.txtTaxPembanding <= 75000000 )
-					PayCal.TaxKomponen = 4100000;
+			if ( PayCal.txtTaxPembanding <= 120000 ) {
+				PayCal.TaxKomponen = 100;				
+			}
+			else if ( PayCal.txtTaxPembanding <= 240000 ){
+				PayCal.TaxKomponen = 1000;				
+			}
+
+			else if ( PayCal.txtTaxPembanding <= 360000 ){
+				PayCal.TaxKomponen = 2000;				
+			}
+			else if ( PayCal.txtTaxPembanding <= 480000 ){
+				PayCal.TaxKomponen = 3000;	
+			}
+			else if ( PayCal.txtTaxPembanding <= 600000 ){
+				PayCal.TaxKomponen = 4000;	
+			}
+			else if ( PayCal.txtTaxPembanding <= 720000 ){
+				PayCal.TaxKomponen = 5000;	
+			} 
+			else if ( PayCal.txtTaxPembanding <= 840000 ){
+				PayCal.TaxKomponen = 6000;
+			}
+			else if ( PayCal.txtTaxPembanding <= 960000 ){
+				PayCal.TaxKomponen = 7000;
+			}
+			else if ( PayCal.txtTaxPembanding <= 1080000 ){
+				PayCal.TaxKomponen = 8000;
+			}	
+			else if ( PayCal.txtTaxPembanding <= 1200000 ){
+				PayCal.TaxKomponen = 9000;
+			}		
+			else if ( PayCal.txtTaxPembanding <= 1500000 ){
+				PayCal.TaxKomponen = 10000;
+			}	
+			else if ( PayCal.txtTaxPembanding <= 3000000 ){
+				PayCal.TaxKomponen = 125000;
+			}	
+			else if ( PayCal.txtTaxPembanding <= 5000000 ){
+				PayCal.TaxKomponen = 250000;
+			} 
+			else if ( PayCal.txtTaxPembanding <= 9000000 ){
+				PayCal.TaxKomponen = 400000;
+			}	
+			else if ( PayCal.txtTaxPembanding <= 20000000 ){
+				PayCal.TaxKomponen = 750000;
+			}	
+			else if ( PayCal.txtTaxPembanding <= 50000000 ){
+				PayCal.TaxKomponen = 1650000;
+			}
+			else if ( PayCal.txtTaxPembanding <= 75000000 ){
+				PayCal.TaxKomponen = 4100000;
+			}
 		}
 		
 		console.log("==========CariTaxKomponenAwalLooping==========");
@@ -578,6 +580,13 @@
 		console.log("CariNett::NettIncome1 :",PayCal.NettIncome1);
 		console.log("CariNett::TaxKomponen :",PayCal.TaxKomponen);
 		console.log("==========CariNett==========");
+	}
+	
+	function CariGross(){
+		PayCal.GrossBasic = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentBasic * PayCal.TaxKomponen);
+		PayCal.GrossInsurance = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentInsurance * PayCal.TaxKomponen);
+		PayCal.GrossJKJKK = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PengaliJkJkk * PayCal.TaxKomponen);
+		PayCal.GrossIncome1 = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentIncome1 * PayCal.TaxKomponen);
 	}
 
 	//total nett
@@ -656,35 +665,64 @@
 		console.log("CariJKJKKBulanan::JKJKKBulanan : ",PayCal.JKJKKBulanan);
 	}
 	
-	        //find month left :?
-        function CariSisaBulan(){
-            var _combobox = document.getElementById('starting_month_combobox');
-            var _StartingMonth_boxValue = _combobox.options[_combobox.selectedIndex].text;
-            PayCal.sisaBulan = 0;
-            if ( _StartingMonth_boxValue == "January" )
-                PayCal.sisaBulan = 12;
-            else if ( _StartingMonth_boxValue == "February" )
-               PayCal.sisaBulan = 11;
-            else if ( _StartingMonth_boxValue == "March" )
-                PayCal.sisaBulan = 10;
-            else if ( _StartingMonth_boxValue == "April" )
-                PayCal.sisaBulan = 9;
-            else if ( _StartingMonth_boxValue == "May" )
-                PayCal.sisaBulan = 8;
-            else if ( _StartingMonth_boxValue == "June" )
-                PayCal.sisaBulan = 7;
-            else if ( _StartingMonth_boxValue == "July" )
-                PayCal.sisaBulan = 6;
-            else if ( _StartingMonth_boxValue == "August" )
-                PayCal.sisaBulan = 5;
-            else if ( _StartingMonth_boxValue == "September" )
-                PayCal.sisaBulan = 4;
-            else if ( _StartingMonth_boxValue == "October" )
-                PayCal.sisaBulan = 3;
-            else if ( _StartingMonth_boxValue == "November" )
-                PayCal.sisaBulan = 2;
-            else if ( _StartingMonth_boxValue == "December" )
-                PayCal.sisaBulan = 1;
-            console.log("CariSisaBulan::sisaBulan : ",PayCal.sisaBulan);
-        }
+	//find month left :?
+	function CariSisaBulan(){
+		var _combobox = document.getElementById('starting_month_combobox');
+		var _StartingMonth_boxValue = _combobox.options[_combobox.selectedIndex].text;
+		PayCal.sisaBulan = 0;
+		if ( _StartingMonth_boxValue == "January" )
+			PayCal.sisaBulan = 12;
+		else if ( _StartingMonth_boxValue == "February" )
+		   PayCal.sisaBulan = 11;
+		else if ( _StartingMonth_boxValue == "March" )
+			PayCal.sisaBulan = 10;
+		else if ( _StartingMonth_boxValue == "April" )
+			PayCal.sisaBulan = 9;
+		else if ( _StartingMonth_boxValue == "May" )
+			PayCal.sisaBulan = 8;
+		else if ( _StartingMonth_boxValue == "June" )
+			PayCal.sisaBulan = 7;
+		else if ( _StartingMonth_boxValue == "July" )
+			PayCal.sisaBulan = 6;
+		else if ( _StartingMonth_boxValue == "August" )
+			PayCal.sisaBulan = 5;
+		else if ( _StartingMonth_boxValue == "September" )
+			PayCal.sisaBulan = 4;
+		else if ( _StartingMonth_boxValue == "October" )
+			PayCal.sisaBulan = 3;
+		else if ( _StartingMonth_boxValue == "November" )
+			PayCal.sisaBulan = 2;
+		else if ( _StartingMonth_boxValue == "December" )
+			PayCal.sisaBulan = 1;
+		console.log("CariSisaBulan::sisaBulan : ",PayCal.sisaBulan);
+	}
 	
+	//get total severance
+	function SimpanTotalSeverance(){
+		PayCal.TotalSeverance = parseInt(document.PayrollCalculator.totalSeverance_field.value) || 0;
+		console.log("SimpanTotalSeverance::TotalSeverance : ",PayCal.TotalSeverance);
+	}
+	
+	//find severance tax
+	function CalculateSeveranceTax(){
+		if ( PayCal.TotalSeverance >= 500000000){
+			PayCal.SeveranceTax = (0.05 * 50000000) + (0.15 * 150000000) + (0.2*250000000) + ((PayCal.TotalSeverance - 500000000) * 0.3);
+		}
+		else if ( PayCal.TotalSeverance >= 250000000 && PayCal.TotalSeverance <= 500000000){
+			PayCal.SeveranceTax = (0.05 * 50000000) + (0.15*150000000) + ((PayCal.TotalSeverance - 250000000)*0.25);
+		}
+		else if ( PayCal.TotalSeverance >= 100000000 && PayCal.TotalSeverance <= 250000000){
+			PayCal.SeveranceTax = (0.5*50000000) + ((PayCal.TotalSeverance - 100000000)*0.15);
+		}
+		else if ( PayCal.TotalSeverance < 50000000){
+			PayCal.SeveranceTax = 0;
+		}
+		console.log("CalculateSeveranceTax::SeveranceTax : ",PayCal.SeveranceTax);
+	}
+	
+	function calculate_severance(){
+		SimpanTotalSeverance();
+		CalculateSeveranceTax();
+		document.PayrollCalculator.totalSeverance_field.value = (PayCal.TotalSeverance).formatMoney();
+		document.PayrollCalculator.SeveranceTax_field.value = (PayCal.SeveranceTax).formatMoney();
+	}
