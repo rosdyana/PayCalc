@@ -69,14 +69,8 @@
             controlCheckbox('gross_basic_salary_checkbox', false);
             controlCheckbox('gross_insurance_checkbox', false);
             controlCheckbox('gros_jkjkk_checkbox', false);
-            //should be in group - TFU
-            var disabledId = ["tax_fixedIncome1_field","nett_fixedIncome1_field","Tax_adjIncome_field",
-                                "Nett_adjIncome_field"];
-            for (var i = 0; i < disabledId.length; i++){
-                controlDisableId(disabledId[i], true);
-            }
-			var thppertamasu = document.PayrollCalculator.targetTHP_field;
-			thppertamasu.focus();
+			var severanceTaxFirstTouch = document.PayrollCalculator.totalSeverance_field;
+			severanceTaxFirstTouch.focus();
         }
 
         //disable-enable group from input data
@@ -156,8 +150,8 @@
 		SimpanStartingMonth();
 		SimpanPrevNettIncome();
 		SimpanPrevTaxCollection();
-		SimpanTargetTHP();
-		SimpanFixedIncome1();
+		//SimpanTargetTHP();
+		//SimpanFixedIncome1();
 		SimpanBSGrossCb();
 		SimpanInsuranceGrossCb();
 		SimpanJkJkkGrossCb();
@@ -368,16 +362,16 @@
 	
 	//fungsi dalam table thp approach - start
 	//nilai target thp
-	function SimpanTargetTHP(){
-		PayCal.THP = parseInt(document.PayrollCalculator.targetTHP_field.value) || 0;
-		console.log("SimpanTargetTHP::targetTHP : ",PayCal.THP);            
-	}
+	//function SimpanTargetTHP(){
+		//PayCal.THP = parseInt(document.PayrollCalculator.targetTHP_field.value) || 0;
+		//console.log("SimpanTargetTHP::targetTHP : ",PayCal.THP);            
+	//}
 	
 	//nilai fixed income1
-	function SimpanFixedIncome1(){
-		PayCal.FixedIncome1 = parseInt(document.PayrollCalculator.fixedIncome1_field.value) || 0;
-		console.log("SimpanFixedIncome1::FixedIncome1 : ",PayCal.FixedIncome1);  
-	}
+	//function SimpanFixedIncome1(){
+		//PayCal.FixedIncome1 = parseInt(document.PayrollCalculator.fixedIncome1_field.value) || 0;
+		//console.log("SimpanFixedIncome1::FixedIncome1 : ",PayCal.FixedIncome1);  
+	//}
 	
 	//fungsi dalam table thp approach - end
 	
@@ -550,6 +544,7 @@
 		}
 		else if(!PayCal.isBSnettCB){
 			PayCal.NettBasic = (PayCal.SisaBulan * (PayCal.BasicSalaryValue - PayCal.PercentBasic * PayCal.TaxKomponen));
+			//PayCal.GrossBasic = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentBasic * PayCal.TaxKomponen);
 		}
 		
 		if(PayCal.isInsurancenettCB){
@@ -580,13 +575,6 @@
 		console.log("CariNett::NettIncome1 :",PayCal.NettIncome1);
 		console.log("CariNett::TaxKomponen :",PayCal.TaxKomponen);
 		console.log("==========CariNett==========");
-	}
-	
-	function CariGross(){
-		PayCal.GrossBasic = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentBasic * PayCal.TaxKomponen);
-		PayCal.GrossInsurance = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentInsurance * PayCal.TaxKomponen);
-		PayCal.GrossJKJKK = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PengaliJkJkk * PayCal.TaxKomponen);
-		PayCal.GrossIncome1 = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentIncome1 * PayCal.TaxKomponen);
 	}
 
 	//total nett
