@@ -63,7 +63,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
     </style>
 	
 <script language="JavaScript" src="<?php echo $calculatorscript?>?n=1"></script>
-<center>
+	<center>
 		<form id="PayrollCalculator" name="PayrollCalculator">
 			<table class="tg" id="FirstGroup" width="580px">
 				<tbody>
@@ -282,7 +282,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 										<td class="tg-031e">
 											<div class="checkbox">
 												<center>
-													<input id="gross_basic_salary_checkbox" type="checkbox">
+													<input id="gross_basic_salary_checkbox" type="checkbox" onClick="BScheckThisCB(this);">
 												</center>
 											</div>
 										</td>
@@ -290,7 +290,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 										<td class="tg-yw4l">
 											<div class="checkbox">
 												<center>
-													<input id="nett_basic_salary_checkbox" type="checkbox">
+													<input id="nett_basic_salary_checkbox" type="checkbox" onClick="nettBScheckThisCB(this);">
 												</center>
 											</div>
 										</td>
@@ -321,7 +321,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 										<td class="tg-031e">
 											<div class="checkbox">
 												<center>
-													<input id="gross_insurance_checkbox" type="checkbox">
+													<input id="gross_insurance_checkbox" type="checkbox" onClick="InsurancecheckThisCB(this);">
 												</center>
 											</div>
 										</td>
@@ -329,7 +329,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 										<td class="tg-yw4l">
 											<div class="checkbox">
 												<center>
-													<input id="nett_insurance_checkbox" type="checkbox">
+													<input id="nett_insurance_checkbox" type="checkbox" onClick="nettInsurancecheckThisCB(this);">
 												</center>
 											</div>
 										</td>
@@ -360,7 +360,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 										<td class="tg-yw4l">
 											<div class="checkbox">
 												<center>
-													<input id="gros_jkjkk_checkbox" type="checkbox">
+													<input id="gross_jkjkk_checkbox" type="checkbox" onClick="JKKcheckThisCB(this);">
 												</center>
 											</div>
 										</td>
@@ -368,7 +368,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 										<td class="tg-yw4l">
 											<div class="checkbox">
 												<center>
-													<input id="nett_jkjkk_checkbox" type="checkbox">
+													<input id="nett_jkjkk_checkbox" type="checkbox" onClick="nettJKKcheckThisCB(this);">
 												</center>
 											</div>
 										</td>
@@ -399,7 +399,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 										<td class="tg-yw4l">
 											<div class="checkbox">
 												<center>
-													<input id="income1_gross_checkbox" type="checkbox">
+													<input id="income1_gross_checkbox" type="checkbox" onClick="Income1checkThisCB(this);">
 												</center>
 											</div>
 										</td>
@@ -407,7 +407,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 										<td class="tg-yw4l">
 											<div class="checkbox">
 												<center>
-													<input id="income1_nett_checkbox" type="checkbox">
+													<input id="income1_nett_checkbox" type="checkbox" onClick="nettIncome1checkThisCB(this);">
 												</center>
 											</div>
 										</td>

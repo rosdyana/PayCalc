@@ -43,13 +43,15 @@
             var _comboboxMonth = document.getElementById('starting_month_combobox');
             if ( _comboboxMonth.value ==""){
                 alert('Bulan Mulai belum dimasukan');
+				var BS_field = document.getElementById('starting_month_combobox');
+                BS_field.focus();
             }
             else{
                 ControlDisableGroup('SecondGroup',true);
                 ControlDisableGroup('ThirdGroup',false);
                 controlCheckbox('gross_basic_salary_checkbox', true);
                 controlCheckbox('gross_insurance_checkbox', true);
-                controlCheckbox('gros_jkjkk_checkbox', true);
+                controlCheckbox('gross_jkjkk_checkbox', true);
                 //should be in group - TFU
                 var disabledId = ["BS_nettComp_field","BS_tax_field","insurance_NettComp_field","insurance_Tax_field",
                                     "jkjkk_NettComp_field","jkjkk_Tax_field","income1_NetComp_field","income1_Tax_field"];
@@ -68,15 +70,9 @@
             ControlDisableGroup('ThirdGroup',true);
             controlCheckbox('gross_basic_salary_checkbox', false);
             controlCheckbox('gross_insurance_checkbox', false);
-            controlCheckbox('gros_jkjkk_checkbox', false);
-            //should be in group - TFU
-            var disabledId = ["tax_fixedIncome1_field","nett_fixedIncome1_field","Tax_adjIncome_field",
-                                "Nett_adjIncome_field"];
-            for (var i = 0; i < disabledId.length; i++){
-                controlDisableId(disabledId[i], true);
-            }
-			var thppertamasu = document.PayrollCalculator.targetTHP_field;
-			thppertamasu.focus();
+            controlCheckbox('gross_jkjkk_checkbox', false);
+			var severanceTaxFirstTouch = document.PayrollCalculator.totalSeverance_field;
+			severanceTaxFirstTouch.focus();
         }
 
         //disable-enable group from input data
@@ -156,8 +152,8 @@
 		SimpanStartingMonth();
 		SimpanPrevNettIncome();
 		SimpanPrevTaxCollection();
-		SimpanTargetTHP();
-		SimpanFixedIncome1();
+		//SimpanTargetTHP();
+		//SimpanFixedIncome1();
 		SimpanBSGrossCb();
 		SimpanInsuranceGrossCb();
 		SimpanJkJkkGrossCb();
@@ -290,6 +286,7 @@
 		else if ( _ptkp_boxValue == "PH/3")
 			_ptkp_field.value = 126000000; 
 		PayCal.PTKP = parseInt(_ptkp_field.value) || 0;
+		_ptkp_field.value = (PayCal.PTKP).formatMoney();
 		console.log("CariPTKP::PTKP : ",PayCal.PTKP);      
 	}
 	
@@ -368,16 +365,16 @@
 	
 	//fungsi dalam table thp approach - start
 	//nilai target thp
-	function SimpanTargetTHP(){
-		PayCal.THP = parseInt(document.PayrollCalculator.targetTHP_field.value) || 0;
-		console.log("SimpanTargetTHP::targetTHP : ",PayCal.THP);            
-	}
+	//function SimpanTargetTHP(){
+		//PayCal.THP = parseInt(document.PayrollCalculator.targetTHP_field.value) || 0;
+		//console.log("SimpanTargetTHP::targetTHP : ",PayCal.THP);            
+	//}
 	
 	//nilai fixed income1
-	function SimpanFixedIncome1(){
-		PayCal.FixedIncome1 = parseInt(document.PayrollCalculator.fixedIncome1_field.value) || 0;
-		console.log("SimpanFixedIncome1::FixedIncome1 : ",PayCal.FixedIncome1);  
-	}
+	//function SimpanFixedIncome1(){
+		//PayCal.FixedIncome1 = parseInt(document.PayrollCalculator.fixedIncome1_field.value) || 0;
+		//console.log("SimpanFixedIncome1::FixedIncome1 : ",PayCal.FixedIncome1);  
+	//}
 	
 	//fungsi dalam table thp approach - end
 	
@@ -396,7 +393,7 @@
 	
 	//jk-jkk gross checkbox
 	function SimpanJkJkkGrossCb(){
-		PayCal.isJkJkkGrossCB = document.PayrollCalculator.gros_jkjkk_checkbox.checked;
+		PayCal.isJkJkkGrossCB = document.PayrollCalculator.gross_jkjkk_checkbox.checked;
 		console.log("SimpanInsuranceGrossCb::isJkJkkGrossCB : ",PayCal.isJkJkkGrossCB);
 	}
 	
@@ -550,6 +547,7 @@
 		}
 		else if(!PayCal.isBSnettCB){
 			PayCal.NettBasic = (PayCal.SisaBulan * (PayCal.BasicSalaryValue - PayCal.PercentBasic * PayCal.TaxKomponen));
+			//PayCal.GrossBasic = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentBasic * PayCal.TaxKomponen);
 		}
 		
 		if(PayCal.isInsurancenettCB){
@@ -580,13 +578,6 @@
 		console.log("CariNett::NettIncome1 :",PayCal.NettIncome1);
 		console.log("CariNett::TaxKomponen :",PayCal.TaxKomponen);
 		console.log("==========CariNett==========");
-	}
-	
-	function CariGross(){
-		PayCal.GrossBasic = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentBasic * PayCal.TaxKomponen);
-		PayCal.GrossInsurance = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentInsurance * PayCal.TaxKomponen);
-		PayCal.GrossJKJKK = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PengaliJkJkk * PayCal.TaxKomponen);
-		PayCal.GrossIncome1 = PayCal.sisaBulan * ( PayCal.BasicSalaryValue - PayCal.PercentIncome1 * PayCal.TaxKomponen);
 	}
 
 	//total nett
@@ -725,4 +716,84 @@
 		CalculateSeveranceTax();
 		document.PayrollCalculator.totalSeverance_field.value = (PayCal.TotalSeverance).formatMoney();
 		document.PayrollCalculator.SeveranceTax_field.value = (PayCal.SeveranceTax).formatMoney();
+	}
+	
+	function BScheckThisCB(id){
+		if (id.checked == false)
+		{
+			document.getElementById("nett_basic_salary_checkbox").checked = true;
+		}
+		else if (id.checked == true){
+			document.getElementById("nett_basic_salary_checkbox").checked = false;
+		}
+	}
+	
+	function nettBScheckThisCB(id){
+		if (id.checked == false)
+		{
+			document.getElementById("gross_basic_salary_checkbox").checked = true;
+		}
+		else if (id.checked == true){
+			document.getElementById("gross_basic_salary_checkbox").checked = false;
+		}
+	}
+	
+	function InsurancecheckThisCB(id){
+		if (id.checked == false)
+		{
+			document.getElementById("nett_insurance_checkbox").checked = true;
+		}
+		else if (id.checked == true){
+			document.getElementById("nett_insurance_checkbox").checked = false;
+		}
+	}
+	
+	function nettInsurancecheckThisCB(id){
+		if (id.checked == false)
+		{
+			document.getElementById("gross_insurance_checkbox").checked = true;
+		}
+		else if (id.checked == true){
+			document.getElementById("gross_insurance_checkbox").checked = false;
+		}
+	}
+	
+	function JKKcheckThisCB(id){
+		if (id.checked == false)
+		{
+			document.getElementById("nett_jkjkk_checkbox").checked = true;
+		}
+		else if (id.checked == true){
+			document.getElementById("nett_jkjkk_checkbox").checked = false;
+		}
+	}
+	
+	function nettJKKcheckThisCB(id){
+		if (id.checked == false)
+		{
+			document.getElementById("gross_jkjkk_checkbox").checked = true;
+		}
+		else if (id.checked == true){
+			document.getElementById("gross_jkjkk_checkbox").checked = false;
+		}
+	}
+	
+	function Income1checkThisCB(id){
+		if (id.checked == false)
+		{
+			document.getElementById("income1_nett_checkbox").checked = true;
+		}
+		else if (id.checked == true){
+			document.getElementById("income1_nett_checkbox").checked = false;
+		}
+	}
+	
+	function nettIncome1checkThisCB(id){
+		if (id.checked == false)
+		{
+			document.getElementById("income1_gross_checkbox").checked = true;
+		}
+		else if (id.checked == true){
+			document.getElementById("income1_gross_checkbox").checked = false;
+		}
 	}

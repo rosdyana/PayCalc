@@ -43,6 +43,8 @@
             var _comboboxMonth = document.getElementById('starting_month_combobox');
             if ( _comboboxMonth.value ==""){
                 alert('Bulan Mulai belum dimasukan');
+				var BS_field = document.getElementById('starting_month_combobox');
+                BS_field.focus();
             }
             else{
                 ControlDisableGroup('SecondGroup',true);
@@ -284,6 +286,7 @@
 		else if ( _ptkp_boxValue == "PH/3")
 			_ptkp_field.value = 126000000; 
 		PayCal.PTKP = parseInt(_ptkp_field.value) || 0;
+		_ptkp_field.value = (PayCal.PTKP).formatMoney();
 		console.log("CariPTKP::PTKP : ",PayCal.PTKP);      
 	}
 	
