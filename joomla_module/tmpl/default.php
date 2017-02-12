@@ -62,7 +62,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 		}
     </style>
 	
-<script language="JavaScript" src="<?php echo $calculatorscript?>?n=1"></script>
+<script language="JavaScript" src="<?php echo $calculatorscript?>"></script>
 	<center>
 		<form id="PayrollCalculator" name="PayrollCalculator">
 			<table class="tg" id="FirstGroup" width="580px">
@@ -72,10 +72,10 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 					</tr>
 					<tr>
 						<td class="tg-yw4l">
-							<table class="tg" width="100%">
+							<table class="tg" id="FirstGroup">
 								<tr>
 									<th class="tg-031e">Tax Status</th>
-									<th class="tg-031e"><select class="form-control" id="tax_status_combobox" name="tax_status_combobox" onchange="CariPTKP()">
+									<th class="tg-031e"><select class="form-control" id="tax_status_combobox" name="tax_status_combobox" style="width:50px" onchange="CariPTKP()">
 										<option disabled selected value="">
 										</option>
 										<option value="TK/0">
@@ -117,12 +117,13 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 									</select></th>
 									<th class="tg-031e">
 										<div class="form-group">
-											<input class="form-control" id="ptkp_field" name="ptkp_field" style="width:125px" type="text">
+											<input class="form-control" id="ptkp_field" name="ptkp_field" style="width:90px" type="text">
 										</div>
 									</th>
 									<th class="tg-031e" colspan="2" rowspan="3">
 										<center>
-											<input class="btn btn-primary" onclick="GrossNettApproach_func()" style="background-color:#F0F0F0;height:100px;width:150px;font-family: 'Droid Serif', cursive;" type="button" value="Income Tax"> <input class="btn btn-primary" onclick="THPApproach_func()" style="background-color:#F0F0F0;height:100px;width:150px;font-family: 'Droid Serif', cursive;" type="button" value="Severance Tax">
+											<input class="btn button-biasa" onclick="GrossNettApproach_func()" style="background-color:#F0F0F0;height:100px;width:120px;font-family: 'Droid Serif', cursive;" type="button" value="Income Tax"> 
+											<input class="btn button-biasa" onclick="THPApproach_func()" style="background-color:#F0F0F0;height:100px;width:120px;font-family: 'Droid Serif', cursive;" type="button" value="Severance Tax">
 										</center>
 									</th>
 								</tr>
@@ -133,7 +134,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 											<input class="form-control" id="jkjkkjpk_field" maxlength="4" name="jkjkkjpk_field" oninput="javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength);" style="width:50px">
 										</div>
 									</td>
-									<td class="tg-031e"><label class="col-lg-2 control-label" for="select">From</label> <select class="form-control" id="jkkjpk_combobox" name="jkkjpk_combobox">
+									<td class="tg-031e"><label class="col-lg-2 control-label" for="select">From</label> <select class="form-control" id="jkkjpk_combobox" style="width:120px" name="jkkjpk_combobox">
 										<option disabled selected value="">
 										</option>
 										<option value="Basic Salary">
@@ -151,7 +152,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 											<input class="form-control" id="jht_field" maxlength="4" name="jht_field" oninput="javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength);" style="width:50px">
 										</div>
 									</td>
-									<td class="tg-031e"><label class="col-lg-2 control-label" for="select">From</label> <select class="form-control" id="jhtsource" name="jhtsource">
+									<td class="tg-031e"><label class="col-lg-2 control-label" for="select">From</label> <select class="form-control" id="jhtsource" style="width:120px" name="jhtsource">
 										<option disabled selected value="">
 										</option>
 										<option value="Basic Salary">
@@ -166,7 +167,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 									<td class="tg-031e">Insurance Premium</td>
 									<td class="tg-031e" colspan="2">
 										<div class="form-group">
-											<input class="form-control" id="insurance_premium_field" name="insurance_premium_field" style="width:98%">
+											<input class="form-control" id="insurance_premium_field" name="insurance_premium_field" style="width:140px">
 										</div>
 									</td>
 									<td class="tg-031e">Previous Nett Income</td>
@@ -178,7 +179,7 @@ $iconresult = $uri->root().'modules/mod_payrollcalc/tmpl/result.png';
 								</tr>
 								<tr>
 									<td class="tg-031e">Starting month</td>
-									<td class="tg-031e" colspan="2"><select class="form-control" id="starting_month_combobox" name="starting_month_combobox" style="width:100%">
+									<td class="tg-031e" colspan="2"><select class="form-control" id="starting_month_combobox" name="starting_month_combobox" style="width:140px">
 										<option disabled selected value="">
 										</option>
 										<option value="January">

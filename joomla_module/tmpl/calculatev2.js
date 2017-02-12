@@ -25,7 +25,7 @@
             return pub;
         }();
         //disable it when go live ;)
-        logger.enableLogger();
+        logger.disableLogger();
 
         Number.prototype.formatMoney = function(c, d, t){
         var n = this, 
