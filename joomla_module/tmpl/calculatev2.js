@@ -610,8 +610,7 @@
 	
 	function CariPKP(){
 		var TotalSementaraPlusSBLM = (PayCal.TotalNett + PayCal.PrevNettIncome + PayCal.SisaBulan * PayCal.TaxKomponen) || 0;
-		var asu = 0.02 * PayCal.PengaliJkJkk;
-		PayCal.PKP = (TotalSementaraPlusSBLM - PayCal.PTKP - asu - PayCal.BiayaJabatan) ||0;	
+		PayCal.PKP = (TotalSementaraPlusSBLM - PayCal.PTKP - PayCal.BiayaJabatan) ||0;	
 		if(PayCal.PKP < 0 ){
 			PayCal.PKP = 0;
 		}
