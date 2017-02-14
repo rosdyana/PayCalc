@@ -42,7 +42,7 @@
         function GrossNettApproach_func(){
             var _comboboxMonth = document.getElementById('starting_month_combobox');
             if ( _comboboxMonth.value ==""){
-                alert('Bulan Mulai belum dimasukan');
+                alert('Please Select Starting Month.');
 				var BS_field = document.getElementById('starting_month_combobox');
                 BS_field.focus();
             }
@@ -208,7 +208,7 @@
 		
 		if(pembandingnya === 0)
 		{
-			alert('Cek kembali input anda')
+			alert('Please Check Again Your Input.')
 		}
 		else{
 			do {
